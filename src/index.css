@@ -1,0 +1,919 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Analog Brand Font - Tay Losa (Headlines) */
+@font-face {
+  font-family: 'Tay Losa';
+  src: url('/fonts/TAYLosa.woff2') format('woff2'),
+       url('/fonts/TAYLosa.woff') format('woff'),
+       url('/fonts/TAYLosa.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Analog Brand Font - Serial B Medium (Body/UI) */
+@font-face {
+  font-family: 'Serial B';
+  src: url('/fonts/SerialB-Medium.woff2') format('woff2'),
+       url('/fonts/SerialB-Medium.woff') format('woff'),
+       url('/fonts/SerialB-Medium.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* COSMICO Audio Water Palette - Primary */
+    --deep-river: 212 74% 13%; /* #0A2339 */
+    --electric-coral: 12 100% 64%; /* #FF6E4A */
+    --river-aqua: 187 51% 77%; /* #A7DCE3 */
+    
+    /* COSMICO Audio Water Palette - Secondary */
+    --solar-gold: 43 89% 66%; /* #F5C15A */
+    --night-water: 240 10% 5%; /* #0C0C0F */
+    --glacial-blue: 203 50% 58%; /* #5EA0C9 */
+    
+    /* COSMICO Audio Water Palette - Accents */
+    --wave-violet: 248 100% 68%; /* #735BFF */
+    --heat-red: 0 74% 58%; /* #E34646 */
+    --mist-grey: 200 14% 96%; /* #F2F4F5 */
+
+    /* Semantic color mappings */
+    --background: 200 14% 96%; /* Mist Grey for light backgrounds */
+    --foreground: 240 10% 5%; /* Night Water for body text */
+    
+    --background-dark: 240 10% 5%; /* Night Water */
+    --foreground-light: 200 14% 96%; /* Mist Grey */
+
+    --card: 200 14% 96%; /* Mist Grey */
+    --card-foreground: 240 10% 5%; /* Night Water */
+
+    --popover: 200 14% 96%;
+    --popover-foreground: 240 10% 5%;
+
+    --primary: 12 100% 64%; /* Electric Coral */
+    --primary-foreground: 200 14% 96%; /* Mist Grey */
+
+    --secondary: 187 51% 77%; /* River Aqua */
+    --secondary-foreground: 212 74% 13%; /* Deep River */
+
+    --muted: 200 14% 96%; /* Mist Grey */
+    --muted-foreground: 212 74% 13%; /* Deep River */
+
+    --accent: 187 51% 77%; /* River Aqua */
+    --accent-foreground: 212 74% 13%; /* Deep River */
+
+    --destructive: 0 74% 58%; /* Heat Red */
+    --destructive-foreground: 200 14% 96%;
+
+    --border: 187 51% 77%; /* River Aqua */
+    --border-dark: 240 10% 5%;
+    --input: 187 51% 77%;
+    --ring: 12 100% 64%; /* Electric Coral */
+
+    --radius: 0.125rem;
+
+    /* Brand-specific tones */
+    --headline-color: 212 74% 13%; /* Deep River for headlines */
+    --body-color: 240 10% 5%; /* Night Water for body text */
+    --button-primary: 12 100% 64%; /* Electric Coral */
+    --button-primary-hover: 12 100% 54%; /* Darker Electric Coral */
+    --button-secondary: 187 51% 77%; /* River Aqua */
+    --link-color: 12 100% 64%; /* Electric Coral */
+    --link-hover: 187 51% 77%; /* River Aqua */
+    
+    /* Gradients and shadows */
+    --gradient-coral: linear-gradient(135deg, hsl(12 100% 64%) 0%, hsl(12 100% 54%) 100%);
+    --gradient-aqua: linear-gradient(135deg, hsl(187 51% 77%) 0%, hsl(203 50% 58%) 100%);
+    --shadow-coral: 0 6px 24px hsla(12 100% 64% / 0.2);
+    --shadow-soft: 0 3px 16px hsla(212 74% 13% / 0.08);
+
+    --sidebar-background: 200 14% 96%;
+    --sidebar-foreground: 212 74% 13%;
+    --sidebar-primary: 12 100% 64%;
+    --sidebar-primary-foreground: 200 14% 96%;
+    --sidebar-accent: 187 51% 77%;
+    --sidebar-accent-foreground: 212 74% 13%;
+    --sidebar-border: 187 51% 77%;
+    --sidebar-ring: 12 100% 64%;
+
+    /* May 2026 Theme Colors - Audio Water Palette */
+    --may-mist-grey: 200 14% 96%; /* #F2F4F5 - backgrounds */
+    --may-night-water: 240 10% 5%; /* #0C0C0F - dark backgrounds */
+    --may-river-aqua: 187 51% 77%; /* #A7DCE3 - CTA hover */
+    --may-glacial-blue: 203 50% 58%; /* #5EA0C9 - subtle accents */
+    --may-electric-coral: 12 100% 64%; /* #FF6E4A - primary CTA */
+    --may-solar-gold: 43 89% 66%; /* #F5C15A - headline accents, dividers */
+    --may-deep-river: 212 74% 13%; /* #0A2339 - footer background */
+
+    /* Preview/Teaser Page - "Let It Flow" Theme */
+    --preview-bg: 210 20% 96%; /* #F4F6F8 - soft stone white */
+    --preview-surface: 210 15% 92%; /* #E8EBEF - subtle card surface */
+    --preview-text: 212 40% 16%; /* #1A2A3A - deep charcoal blue */
+    --preview-muted: 210 20% 45%; /* #5B6B7B - muted stone */
+    --preview-accent: 187 45% 40%; /* #3A8A8F - river teal */
+    --preview-border: 210 15% 80%; /* #C5CCD4 - subtle border */
+    --preview-dark: 212 50% 10%; /* #0D1926 - deep night */
+
+    /* ====== ADMIN THEME - Notion/Attio Inspired ====== */
+    /* Backgrounds - Calm, warm neutrals */
+    --admin-bg: 60 9% 97.5%; /* Warm off-white background */
+    --admin-surface: 0 0% 100%; /* Pure white cards */
+    --admin-surface-elevated: 0 0% 100%; /* Elevated surfaces */
+    --admin-sidebar: 0 0% 100%; /* Clean white sidebar */
+    --admin-sidebar-active: 60 9% 96%; /* Subtle active state */
+    
+    /* Text - Clear hierarchy */
+    --admin-text: 0 0% 13%; /* Primary text - slightly softer than pure black */
+    --admin-text-primary: 0 0% 13%; /* Alias for consistency */
+    --admin-text-secondary: 0 0% 40%; /* Secondary/muted text */
+    --admin-text-tertiary: 0 0% 55%; /* Labels, placeholders */
+    --admin-text-muted: 0 0% 55%; /* Backwards compat */
+    --admin-text-subtle: 0 0% 65%; /* Backwards compat */
+    --admin-foreground: 0 0% 13%; /* Alias for consistency */
+    
+    /* Borders - Ultra subtle */
+    --admin-border: 0 0% 92%; /* Barely-there borders */
+    --admin-border-strong: 0 0% 85%; /* When you need definition */
+    --admin-border-hover: 0 0% 80%; /* Hover state border */
+    --admin-divider: 0 0% 94%; /* Horizontal dividers */
+    
+    /* Interactive - Ghost-first approach */
+    --admin-primary: 0 0% 13%; /* Black for primary */
+    --admin-primary-foreground: 0 0% 100%;
+    --admin-hover: 0 0% 97%; /* Subtle hover */
+    --admin-active: 60 9% 96%; /* Warm active state */
+    --admin-active-foreground: 0 0% 13%;
+    --admin-selected: 215 100% 97%; /* Light blue selection */
+    
+    /* Accent - Single accent color */
+    --admin-accent: 215 100% 50%; /* Blue accent */
+    --admin-accent-muted: 215 100% 96%; /* Light blue bg */
+    --admin-accent-subtle: 215 100% 97%; /* Very light blue bg for icons */
+    
+    /* Status Colors - Muted, not screaming */
+    --admin-success: 142 72% 42%; /* Green */
+    --admin-success-muted: 142 72% 95%;
+    --admin-warning: 38 95% 50%; /* Amber */
+    --admin-warning-muted: 38 95% 95%;
+    --admin-error: 0 72% 55%; /* Red */
+    --admin-error-muted: 0 72% 96%;
+    --admin-info: 215 100% 50%; /* Blue */
+    --admin-info-muted: 215 100% 96%;
+    
+    /* Pipeline/Status Colors - Consistent dots */
+    --admin-status-lead: 215 100% 50%; /* Blue - new leads */
+    --admin-status-contacted: 38 95% 50%; /* Amber - in progress */
+    --admin-status-confirmed: 142 72% 42%; /* Green - confirmed */
+    --admin-status-declined: 0 0% 55%; /* Grey - declined */
+    --admin-status-pending: 280 80% 55%; /* Purple - pending */
+    
+    /* Spacing scale (reference) */
+    /* xs: 4px, sm: 8px, md: 12px, lg: 16px, xl: 24px, 2xl: 32px, 3xl: 48px */
+  }
+
+  .dark {
+    --background: 240 10% 5%; /* Night Water background */
+    --foreground: 200 14% 96%; /* Mist Grey text */
+    --background-dark: 240 10% 5%;
+    --foreground-light: 200 14% 96%;
+    --card: 240 10% 8%; /* Slightly lighter Night Water */
+    --card-foreground: 200 14% 96%;
+    --popover: 240 10% 8%;
+    --popover-foreground: 200 14% 96%;
+    --primary: 12 100% 64%; /* Electric Coral */
+    --primary-foreground: 240 10% 5%;
+    --secondary: 187 51% 77%; /* River Aqua */
+    --secondary-foreground: 240 10% 5%;
+    --muted: 212 74% 13%; /* Deep River */
+    --muted-foreground: 200 14% 96%; /* Mist Grey */
+    --accent: 187 51% 77%; /* River Aqua */
+    --accent-foreground: 240 10% 5%;
+    --destructive: 0 74% 58%; /* Heat Red */
+    --destructive-foreground: 200 14% 96%;
+    --border: 212 74% 20%;
+    --border-dark: 212 74% 20%;
+    --input: 212 74% 20%;
+    --ring: 12 100% 64%;
+    --headline-color: 200 14% 96%; /* Mist Grey for dark mode headlines */
+    --body-color: 200 14% 96%; /* Mist Grey for dark mode body */
+    --button-primary: 12 100% 64%;
+    --button-primary-hover: 12 100% 54%;
+    --link-hover: 187 51% 77%; /* River Aqua */
+    --sidebar-background: 240 10% 5%;
+    --sidebar-foreground: 200 14% 96%;
+    --sidebar-primary: 12 100% 64%;
+    --sidebar-primary-foreground: 200 14% 96%;
+    --sidebar-accent: 187 51% 77%;
+    --sidebar-accent-foreground: 240 10% 5%;
+    --sidebar-border: 212 74% 20%;
+    --sidebar-ring: 12 100% 64%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-weight: 400; /* Body text weight - Regular */
+    background: hsl(200 14% 96%); /* Mist Grey */
+    background-attachment: fixed;
+    line-height: 1.6; /* Body text line height */
+    letter-spacing: 0; /* No extra spacing for body */
+    color: hsl(240 10% 5%); /* Night Water body text */
+  }
+
+  /* Body text elements */
+  p, li, blockquote {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* H1 - Hero/Page Title */
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 44px; /* Mobile default */
+    color: hsl(212 74% 13%); /* Deep River */
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  @media (min-width: 768px) {
+    h1 {
+      font-size: 64px; /* Desktop */
+    }
+  }
+
+  /* H2 - Section Title */
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 26px; /* Mobile default */
+    color: hsl(212 74% 13%); /* Deep River */
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+
+  @media (min-width: 768px) {
+    h2 {
+      font-size: 36px; /* Desktop */
+    }
+  }
+
+  /* H3 - Subhead (Italic) */
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 20px; /* Mobile default */
+    color: hsl(212 74% 13%); /* Deep River */
+    letter-spacing: 0;
+    line-height: 1.25;
+  }
+
+  @media (min-width: 768px) {
+    h3 {
+      font-size: 28px; /* Desktop */
+    }
+  }
+
+  /* H4-H6 - Additional hierarchy */
+  h4, h5, h6 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    color: hsl(212 74% 13%); /* Deep River */
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+
+  /* Paper grain texture overlay - subtle */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.05; /* Subtle texture */
+    z-index: 9999;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperFilter)' fill='%23A7DCE3'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-coral);
+  }
+
+  .coral-glow {
+    text-shadow: 0 2px 16px hsla(12 100% 64% / 0.25); /* Electric Coral glow */
+    filter: drop-shadow(0 1px 3px hsla(12 100% 54% / 0.15));
+  }
+
+  /* Typography utility classes */
+  
+  /* Body Large */
+  .text-body-large {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px; /* Mobile default */
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .text-body-large {
+      font-size: 20px; /* Desktop */
+    }
+  }
+
+  /* Body Standard */
+  .text-body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Caption */
+  .text-caption {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+    color: hsl(203 50% 48%); /* Muted Glacial Blue */
+  }
+
+  .text-button {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500; /* Medium */
+    text-transform: none; /* NO all caps */
+    letter-spacing: 0.04em; /* UI text spacing */
+    line-height: 1.2;
+  }
+
+  /* UI text, labels, button text */
+  .text-ui, label, button, .btn {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+
+  .animate-float {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 1.5s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .font-serif {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .font-display {
+    font-family: 'Fraunces', serif;
+  }
+
+  .font-display-italic {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+  }
+
+  .font-sans {
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Admin-specific font - guaranteed Inter for all admin UI */
+  .font-admin {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  .divider-coral {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, hsl(var(--primary)) 50%, transparent 100%);
+  }
+
+  .divider-aqua {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, hsl(var(--secondary)) 50%, transparent 100%);
+  }
+
+  .mist-texture {
+    position: relative;
+  }
+
+  .mist-texture::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.06;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='mist'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23mist)' fill='%23A7DCE3' opacity='0.6'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  /* Gentle hover effects */
+  .hover-gentle {
+    transition: all 0.4s ease-out;
+  }
+
+  .hover-gentle:hover {
+    box-shadow: 0 8px 32px hsla(212 74% 13% / 0.12);
+    transform: translateY(-2px);
+  }
+
+  /* Photo treatment - cool tones */
+  .photo-treatment {
+    filter: brightness(0.95) contrast(0.92) saturate(0.9);
+  }
+
+  /* Divider - River Aqua line */
+  .divider-aqua-line {
+    height: 1px;
+    background: hsl(187 51% 77%);
+    opacity: 0.6;
+  }
+
+  /* Audio Water atmospheric gradient - very subtle */
+  .audio-water-gradient {
+    position: relative;
+  }
+  
+  .audio-water-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, hsl(200 14% 96%) 0%, hsl(187 51% 77% / 0.2) 100%);
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Mist Grey background utility */
+  .bg-mist {
+    background: hsl(200 14% 96% / 0.5);
+  }
+
+  /* Night Water section */
+  .bg-night-water {
+    background: hsl(240 10% 5%);
+    color: hsl(200 14% 96%);
+  }
+
+  /* Organic paper texture - 4% opacity */
+  .paper-texture {
+    position: relative;
+  }
+  
+  .paper-texture::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoise)' fill='%230A2339'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  /* Cinematic vignette for hero/footer images */
+  .cinematic-vignette {
+    position: relative;
+  }
+  
+  .cinematic-vignette::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* ====== ADMIN THEME STYLES - Notion/Attio Inspired ====== */
+  .admin-theme {
+    --background: var(--admin-bg);
+    --foreground: var(--admin-text);
+    --card: var(--admin-surface);
+    --card-foreground: var(--admin-text);
+    --popover: var(--admin-surface);
+    --popover-foreground: var(--admin-text);
+    --primary: var(--admin-primary);
+    --primary-foreground: var(--admin-primary-foreground);
+    --secondary: var(--admin-hover);
+    --secondary-foreground: var(--admin-text);
+    --muted: var(--admin-hover);
+    --muted-foreground: var(--admin-text-secondary);
+    --accent: var(--admin-accent-muted);
+    --accent-foreground: var(--admin-accent);
+    --destructive: var(--admin-error);
+    --destructive-foreground: 0 0% 100%;
+    --border: var(--admin-border);
+    --input: var(--admin-border);
+    --ring: var(--admin-accent);
+    
+    /* Sidebar overrides */
+    --sidebar-background: var(--admin-sidebar);
+    --sidebar-foreground: var(--admin-text-secondary);
+    --sidebar-primary: var(--admin-text);
+    --sidebar-primary-foreground: var(--admin-surface);
+    --sidebar-accent: var(--admin-sidebar-active);
+    --sidebar-accent-foreground: var(--admin-text);
+    --sidebar-border: var(--admin-border);
+    --sidebar-ring: var(--admin-accent);
+  }
+
+  /* Remove paper texture in admin */
+  .admin-theme body::before {
+    display: none;
+  }
+
+  /* Admin typography - Inter with refined scale */
+  .admin-theme,
+  .admin-theme * {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .admin-theme h1,
+  .admin-theme h2,
+  .admin-theme h3,
+  .admin-theme h4,
+  .admin-theme h5,
+  .admin-theme h6 {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-style: normal !important;
+    color: hsl(var(--admin-text));
+  }
+
+  /* Typography scale - Notion-inspired */
+  .admin-theme h1 {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+
+  .admin-theme h2 {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+  }
+
+  .admin-theme h3 {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  .admin-theme h4 {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  /* Body text */
+  .admin-theme p,
+  .admin-theme span,
+  .admin-theme li {
+    font-size: 14px;
+    line-height: 1.6;
+    color: hsl(var(--admin-text));
+  }
+
+  /* Small text */
+  .admin-theme .text-sm {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .admin-theme .text-xs {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  /* Label style - uppercase micro labels */
+  .admin-theme .admin-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: hsl(var(--admin-text-tertiary));
+  }
+
+  /* Admin Cards - Borderless, clean */
+  .admin-theme .admin-card {
+    background: hsl(var(--admin-surface));
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.04), 0 1px 2px hsla(0, 0%, 0%, 0.02);
+  }
+
+  .admin-theme .admin-card-bordered {
+    background: hsl(var(--admin-surface));
+    border: 1px solid hsl(var(--admin-border));
+    border-radius: 12px;
+    box-shadow: none;
+  }
+
+  /* Admin Tables - Looser, cleaner */
+  .admin-theme table {
+    background: hsl(var(--admin-surface));
+  }
+
+  .admin-theme th {
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: hsl(var(--admin-text-tertiary));
+    border-bottom: 1px solid hsl(var(--admin-divider));
+    padding: 12px 16px;
+    text-align: left;
+  }
+
+  .admin-theme td {
+    border-bottom: 1px solid hsl(var(--admin-divider));
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+
+  .admin-theme tr:last-child td {
+    border-bottom: none;
+  }
+
+  .admin-theme tr:hover td {
+    background: hsl(var(--admin-hover));
+  }
+
+  /* Admin Inputs - Subtle, clean */
+  .admin-theme input,
+  .admin-theme textarea,
+  .admin-theme select {
+    border: 1px solid hsl(var(--admin-border));
+    border-radius: 8px;
+    background: hsl(var(--admin-surface));
+    font-size: 14px;
+    padding: 10px 12px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .admin-theme input::placeholder,
+  .admin-theme textarea::placeholder {
+    color: hsl(var(--admin-text-tertiary));
+  }
+
+  .admin-theme input:focus,
+  .admin-theme textarea:focus,
+  .admin-theme select:focus {
+    border-color: hsl(var(--admin-accent));
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--admin-accent-muted));
+  }
+
+  /* Admin Badges/Pills - Status colors */
+  .admin-theme .admin-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    background: hsl(var(--admin-hover));
+    color: hsl(var(--admin-text-secondary));
+  }
+
+  .admin-theme .admin-badge-success {
+    background: hsl(var(--admin-success-muted));
+    color: hsl(var(--admin-success));
+  }
+
+  .admin-theme .admin-badge-warning {
+    background: hsl(var(--admin-warning-muted));
+    color: hsl(var(--admin-warning));
+  }
+
+  .admin-theme .admin-badge-error {
+    background: hsl(var(--admin-error-muted));
+    color: hsl(var(--admin-error));
+  }
+
+  .admin-theme .admin-badge-info {
+    background: hsl(var(--admin-info-muted));
+    color: hsl(var(--admin-info));
+  }
+
+  /* Status dots */
+  .admin-theme .admin-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+
+  .admin-theme .admin-dot-lead { background: hsl(var(--admin-status-lead)); }
+  .admin-theme .admin-dot-contacted { background: hsl(var(--admin-status-contacted)); }
+  .admin-theme .admin-dot-confirmed { background: hsl(var(--admin-status-confirmed)); }
+  .admin-theme .admin-dot-declined { background: hsl(var(--admin-status-declined)); }
+  .admin-theme .admin-dot-pending { background: hsl(var(--admin-status-pending)); }
+
+  /* Ghost-first buttons in admin */
+  .admin-theme .admin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 13px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: hsl(var(--admin-text-secondary));
+  }
+
+  .admin-theme .admin-btn:hover {
+    background: hsl(var(--admin-hover));
+    color: hsl(var(--admin-text));
+  }
+
+  .admin-theme .admin-btn-primary {
+    background: hsl(var(--admin-primary));
+    color: hsl(var(--admin-primary-foreground));
+  }
+
+  .admin-theme .admin-btn-primary:hover {
+    background: hsl(0, 0%, 20%);
+  }
+
+  .admin-theme .admin-btn-outline {
+    border: 1px solid hsl(var(--admin-border-strong));
+    background: transparent;
+    color: hsl(var(--admin-text));
+  }
+
+  .admin-theme .admin-btn-outline:hover {
+    background: hsl(var(--admin-hover));
+    border-color: hsl(var(--admin-text-tertiary));
+  }
+
+  .admin-theme .admin-btn-sm {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .admin-theme .admin-btn-icon {
+    padding: 8px;
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Row hover actions */
+  .admin-theme .admin-row-actions {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .admin-theme tr:hover .admin-row-actions,
+  .admin-theme [data-row]:hover .admin-row-actions {
+    opacity: 1;
+  }
+
+  /* Sidebar navigation items */
+  .admin-theme .admin-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    color: hsl(var(--admin-text-secondary));
+    transition: all 0.15s ease;
+    cursor: pointer;
+  }
+
+  .admin-theme .admin-nav-item:hover {
+    background: hsl(var(--admin-sidebar-active));
+    color: hsl(var(--admin-text));
+  }
+
+  .admin-theme .admin-nav-item.active {
+    background: hsl(var(--admin-sidebar-active));
+    color: hsl(var(--admin-text));
+    font-weight: 500;
+  }
+
+  /* Section labels */
+  .admin-theme .admin-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: hsl(var(--admin-text-tertiary));
+    padding: 16px 12px 8px;
+  }
+
+  /* Dividers */
+  .admin-theme .admin-divider {
+    height: 1px;
+    background: hsl(var(--admin-divider));
+    margin: 8px 0;
+  }
+
+  /* Selection state */
+  .admin-theme [data-selected="true"] {
+    background: hsl(var(--admin-selected)) !important;
+  }
+
+  /* Skeleton loading */
+  .admin-theme .admin-skeleton {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--admin-hover)) 25%,
+      hsl(var(--admin-divider)) 50%,
+      hsl(var(--admin-hover)) 75%
+    );
+    background-size: 200% 100%;
+    animation: admin-shimmer 1.5s ease-in-out infinite;
+    border-radius: 6px;
+  }
+
+  @keyframes admin-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Page layout helpers */
+  .admin-theme .admin-page {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .admin-theme .admin-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .admin-theme .admin-page-title {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: hsl(var(--admin-text));
+  }
+
+  .admin-theme .admin-page-subtitle {
+    font-size: 14px;
+    color: hsl(var(--admin-text-secondary));
+    margin-top: 4px;
+  }
+
+  /* Backwards compatibility - preserve existing button behavior */
+  .admin-theme button[class*="variant-admin"] {
+    /* Let the button component handle this */
+  }
+}
