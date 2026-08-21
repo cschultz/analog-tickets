@@ -1,0 +1,72 @@
+name: E2E Checkout Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      # BASE_URL must be configured as a repository variable. There is no
+      # default target, so CI can never run against someone else's site.
+      - name: Verify BASE_URL is configured
+        run: |
+          if [ -z "${{ vars.BASE_URL }}" ]; then
+            echo "::error::Repository variable BASE_URL is not set. Set it to the environment you want to test (e.g. https://example.test)."
+            exit 1
+          fi
+
+      - name: Run E2E tests
+        run: npx playwright test e2e/ticketing.spec.ts
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+      - name: Send failure notification email
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "🚨 E2E tests failed"
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
+          body: |
+            E2E checkout tests failed on ${{ github.repository }}.
+            
+            Branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+            Author: ${{ github.actor }}
+            
+            View the failed run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
+            Please check the Playwright report artifact for details.

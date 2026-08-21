@@ -1,0 +1,60 @@
+name: Admin UI Lint
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'src/components/admin/**'
+      - 'src/modules/admin/pages/**'
+      - 'src/layouts/AdminLayout.tsx'
+      - 'src/components/artists/**'
+      - 'src/components/production/**'
+      - 'src/components/email/**'
+      - 'src/components/contracts/**'
+      - 'src/components/EventManager.tsx'
+      - 'src/components/TicketManagement.tsx'
+      - 'src/components/SalesReport.tsx'
+      - 'src/components/BulkPaymentReminders.tsx'
+      - 'src/components/CleanupOldRegistrations.tsx'
+      - 'src/components/VerifyPendingPayments.tsx'
+      - 'src/components/AccommodationInventoryManager.tsx'
+      - 'src/components/EventGuestList.tsx'
+      - 'src/components/BulkEmailAuditLog.tsx'
+      - 'src/components/IndividualEmailComposer.tsx'
+      - 'scripts/lint-admin-ui.sh'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'src/components/admin/**'
+      - 'src/modules/admin/pages/**'
+      - 'src/layouts/AdminLayout.tsx'
+      - 'src/components/artists/**'
+      - 'src/components/production/**'
+      - 'src/components/email/**'
+      - 'src/components/contracts/**'
+      - 'src/components/EventManager.tsx'
+      - 'src/components/TicketManagement.tsx'
+      - 'src/components/SalesReport.tsx'
+      - 'src/components/BulkPaymentReminders.tsx'
+      - 'src/components/CleanupOldRegistrations.tsx'
+      - 'src/components/VerifyPendingPayments.tsx'
+      - 'src/components/AccommodationInventoryManager.tsx'
+      - 'src/components/EventGuestList.tsx'
+      - 'src/components/BulkEmailAuditLog.tsx'
+      - 'src/components/IndividualEmailComposer.tsx'
+      - 'scripts/lint-admin-ui.sh'
+
+jobs:
+  admin-ui-lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Make lint script executable
+        run: chmod +x scripts/lint-admin-ui.sh
+
+      - name: Run Admin UI Lint
+        run: ./scripts/lint-admin-ui.sh

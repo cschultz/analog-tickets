@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!--
+      Defense-in-depth cache hints for index.html. The actual HTTP Cache-Control
+      headers are set by Lovable's hosting layer (project-level _headers /
+      netlify.toml / vercel.json files are NOT honored). These meta tags are a
+      best-effort hint to browsers and any intermediate caches that the HTML
+      shell must always be revalidated. Hashed JS/CSS in /assets are immutable
+      by filename so they remain safely long-cacheable.
+    -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Analog Tickets" />
+    <meta name="theme-color" content="#C7A97A" />
+    <link rel="icon" type="image/x-icon" href="https://storage.googleapis.com/gpt-engineer-file-uploads/oTRaaoBDf2V0dQzRE9p4ZFc9XTk1/uploads/1764817621019-aed77a130cd182b1acc3c8c0adaeacc0.ico.png">
+    <title>Cosmico — a demonstration of Analog Tickets</title>
+    <meta name="description" content="Cosmico was a festival we previously created and no longer produce. It lives on here as a demonstration of Analog Tickets, the free, remixable ticketing platform from Analog Commons. Tickets and bookings are not available.">
+    <meta name="author" content="Analog Commons" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!--
+      No analytics, advertising, tag-manager or pixel snippets live in this
+      file. A fresh remix must not load third-party tracking. An operator opts
+      in with their OWN ids via optional VITE_* variables (see .env.example);
+      the app then injects the tags at runtime from
+      src/platform/config/tracking.ts. Never commit a real tracking id here.
+    -->
+
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://example.test/og-default.jpg">
+    <meta property="og:url" content="https://example.test/" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <meta name="twitter:image" content="https://example.test/og-default.jpg">
+    
+  
+  
+  
+  
+  
+  
+  
+  <link rel="icon" type="image/x-icon" href="https://storage.googleapis.com/gpt-engineer-file-uploads/oTRaaoBDf2V0dQzRE9p4ZFc9XTk1/uploads/1762904023358-aed77a130cd182b1acc3c8c0adaeacc0.ico (1).png">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="Cosmico — a demonstration of Analog Tickets">
+  <meta name="twitter:title" content="Cosmico — a demonstration of Analog Tickets">
+  <meta property="og:description" content="Cosmico was a festival we previously created and no longer produce. It lives on here as a demonstration of Analog Tickets, the free, remixable ticketing platform from Analog Commons. Tickets and bookings are not available.">
+  <meta name="twitter:description" content="Cosmico was a festival we previously created and no longer produce. It lives on here as a demonstration of Analog Tickets, the free, remixable ticketing platform from Analog Commons. Tickets and bookings are not available.">
+  </head>
+
+  <body>
+    <!-- No tag-manager noscript fallback: tracking is opt-in and runtime-injected. -->
+
+    <div id="root"></div>
+    <!-- Cache busting runs ONLY on the canonical production hosts. Anywhere else
+         (preview, sandbox, localhost, custom subdomain we forgot about, file://,
+         opaque origins, or anything that throws while detecting) is treated as
+         non-production and skipped entirely. Fails closed by design. -->
+    <!-- cache-bust trigger: 2026-05-10 my-tickets cache flush -->
+    <script>
+      (function() {
+        var SITE_VERSION = 'analog-commons-__BUILD_TS__';
+        window.__APP_VERSION__ = SITE_VERSION;
+
+        // Allowlist: only these exact hostnames may clear caches / unregister SWs.
+        // Everything else (previews, localhost, staging, unknown) is a no-op.
+        // Configure with your own production hostnames before deploying.
+        var PRODUCTION_HOSTS = ['example.test', 'www.example.test'];
+
+        function isProductionHost() {
+          try {
+            if (window.location.protocol !== 'https:') return false;
+            var hostname = (window.location.hostname || '').toLowerCase();
+            if (!hostname) return false;
+            // Defense in depth: explicitly reject any Lovable preview/sandbox host.
+            if (hostname.endsWith('.lovableproject.com')) return false;
+            if (hostname.endsWith('.lovable.dev')) return false;
+            if (hostname.endsWith('.lovable.app') && hostname.indexOf('--') !== -1) return false;
+            // Reject anything that looks like local dev.
+            if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '0.0.0.0') return false;
+            if (hostname.endsWith('.local') || hostname.endsWith('.localhost')) return false;
+            return PRODUCTION_HOSTS.indexOf(hostname) !== -1;
+          } catch (e) {
+            return false; // fail closed
+          }
+        }
+
+        if (!isProductionHost()) return;
+
+        var storageKey = 'site_version';
+        var reloadKey = storageKey + '_reload_' + SITE_VERSION;
+        var stored = null;
+        try { stored = localStorage.getItem(storageKey); } catch (e) { return; }
+
+        function clearCachesAndWorkers() {
+          var tasks = [];
+          if ('caches' in window) {
+            tasks.push(
+              caches.keys().then(function(names) {
+                return Promise.all(names.map(function(name) { return caches.delete(name); }));
+              })
+            );
+          }
+          if ('serviceWorker' in navigator) {
+            tasks.push(
+              navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                return Promise.all(registrations.map(function(reg) { return reg.unregister(); }));
+              })
+            );
+          }
+          return Promise.allSettled(tasks);
+        }
+
+        function forceReloadOnce() {
+          try {
+            if (sessionStorage.getItem(reloadKey)) return;
+            sessionStorage.setItem(reloadKey, '1');
+          } catch (e) { return; }
+          var url = new URL(window.location.href);
+          url.searchParams.set('__v', SITE_VERSION);
+          window.location.replace(url.toString());
+        }
+
+        if (stored !== SITE_VERSION) {
+          try { localStorage.setItem(storageKey, SITE_VERSION); } catch (e) {}
+          clearCachesAndWorkers().finally(function() {
+            if (stored) forceReloadOnce();
+          });
+        }
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
