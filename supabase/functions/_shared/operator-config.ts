@@ -124,3 +124,11 @@ export function getEventId(
 export function getStripePriceId(name: string): string {
   return env(name);
 }
+
+/**
+ * SMS alert destination (E.164 or bare digits, provider dependent).
+ * Empty string when unconfigured — callers MUST skip sending.
+ */
+export function getAlertPhone(): string {
+  return env("OPERATOR_ALERT_PHONE");
+}

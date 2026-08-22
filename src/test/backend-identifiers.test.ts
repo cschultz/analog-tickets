@@ -44,6 +44,9 @@ const FORBIDDEN: Array<{ label: string; pattern: RegExp }> = [
   { label: "live Stripe customer id", pattern: /"cus_[A-Za-z0-9]{8,}"/ },
   { label: "live Stripe payment intent id", pattern: /"pi_[A-Za-z0-9]{8,}"/ },
   { label: "live Stripe account id", pattern: /"acct_[A-Za-z0-9]{8,}"/ },
+  // Operator personal phone numbers: any 10/11-digit US number literal
+  // (555 exchange is reserved for fiction and allowed in fixtures).
+  { label: "hardcoded operator phone number", pattern: /"\+?1?(?!.*555)[2-9]\d{9}"/ },
 ];
 
 describe("backend source contains no production identifiers", () => {
@@ -81,6 +84,22 @@ describe("backend fails closed without configuration", () => {
     const notify = readFileSync(`${BACKEND_ROOT}/_shared/admin-notify-recipients.ts`, "utf8");
     expect(notify).toContain("PLATFORM_ADMIN_EMAILS");
     expect(notify).not.toMatch(/@[a-z0-9-]+\.[a-z]{2,}/i);
+  });
+
+  it("routes every SMS alert through OPERATOR_ALERT_PHONE", () => {
+    expect(config).toMatch(/export function getAlertPhone\(\): string \{\s*return env\("OPERATOR_ALERT_PHONE"\);/);
+
+    const smsFunctions = [
+      "checkout-canary",
+      "client-error-alert-monitor",
+      "send-checkin-alert",
+      "sms-health-canary",
+    ];
+    for (const fn of smsFunctions) {
+      const body = readFileSync(`${BACKEND_ROOT}/${fn}/index.ts`, "utf8");
+      expect(body, `${fn} must resolve its alert number from config`).toContain("getAlertPhone()");
+      expect(body, `${fn} must not hardcode a phone number`).not.toMatch(/"\+?1?(?!.*555)[2-9]\d{9}"/);
+    }
   });
 
   it("never falls back to a real domain for SITE_URL", () => {
