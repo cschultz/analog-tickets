@@ -206,7 +206,7 @@ serve(async (req) => {
     const metaEventId = generateMetaEventId("purchase");
     const icEventId = generateMetaEventId("ic");
 
-    console.log("Creating Cosmico checkout:", { ticketType, quantity, email, donationAmount, accommodationWaitlist, childCount, youthTicketType, youthCount, metaEventId });
+    console.log("Creating Cosmico checkout:", { ticketType, quantity, hasEmail: !!email, donationAmount, accommodationWaitlist, childCount, youthTicketType, youthCount, metaEventId });
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2025-08-27.basil",
@@ -352,7 +352,7 @@ serve(async (req) => {
               stripeCouponId = coupon.id;
             }
 
-            console.log("[create-cosmico-checkout] Promo applied:", { code: promo.code, discountCents: promoDiscountCents });
+            console.log("[create-cosmico-checkout] Promo applied:", { promoId: promo.id, discountCents: promoDiscountCents });
           }
         }
       }

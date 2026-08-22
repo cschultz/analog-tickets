@@ -18,6 +18,18 @@ function logLine(obj: Record<string, unknown>) {
   console.log(JSON.stringify({ fn: "validate-promo-code", ts: new Date().toISOString(), ...obj }));
 }
 
+/**
+ * Privacy: neither the customer email nor the raw promo code may ever reach
+ * logs or the checkout_errors table. We emit a short, non-reversible
+ * fingerprint so operators can still correlate repeated attempts.
+ */
+async function fingerprint(value: string): Promise<string> {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(digest).slice(0, 6))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
@@ -37,16 +49,25 @@ Deno.serve(async (req) => {
     code: string, email: string | null, ticketType: string | null,
     orderTotal: number | null, reason: string, errorCode: string,
   ) => {
-    logLine({ event: "rejected", code, email, ticket_type: ticketType, error_code: errorCode, reason });
+    const codeRef = await fingerprint(code);
+    const emailRef = email ? await fingerprint(email.toLowerCase()) : null;
+    logLine({
+      event: "rejected",
+      code_ref: codeRef,
+      email_ref: emailRef,
+      ticket_type: ticketType,
+      error_code: errorCode,
+      reason,
+    });
     try {
       await supabase.from("checkout_errors").insert({
         error_type: "promo_code_rejected",
         error_message: reason.slice(0, 500),
         error_code: errorCode,
         ticket_type: ticketType,
-        user_email: email?.toLowerCase() || null,
+        user_email: null,
         user_agent: userAgent,
-        request_payload: { attempted_code: code, order_total: orderTotal },
+        request_payload: { code_ref: codeRef, email_ref: emailRef, order_total: orderTotal },
       });
     } catch (err) {
       logLine({ event: "log_insert_failed", error: String(err) });
@@ -70,7 +91,13 @@ Deno.serve(async (req) => {
     return respond(400, { valid: false, error_code: "EMPTY", message: "Please enter a promo code" });
   }
 
-  logLine({ event: "attempt", code, email, ticket_type: ticketType, order_total: orderTotal });
+  logLine({
+    event: "attempt",
+    code_ref: await fingerprint(code),
+    email_ref: email ? await fingerprint(email.toLowerCase()) : null,
+    ticket_type: ticketType,
+    order_total: orderTotal,
+  });
 
   const { data: promo, error: fetchError } = await supabase
     .from("promo_codes")
@@ -128,7 +155,7 @@ Deno.serve(async (req) => {
     }
   }
 
-  logLine({ event: "accepted", code, email, ticket_type: ticketType });
+  logLine({ event: "accepted", promo_id: promo.id, ticket_type: ticketType });
   return respond(200, {
     valid: true,
     promo: {

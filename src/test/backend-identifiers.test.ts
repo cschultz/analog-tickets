@@ -110,10 +110,9 @@ describe("backend fails closed without configuration", () => {
   });
 });
 
-
 describe("create-addon-checkout logs no customer PII", () => {
   const body = readFileSync(`${BACKEND_ROOT}/create-addon-checkout/index.ts`, "utf8");
-  const logCalls = body.match(/logStep\\([^\\n]*/g) ?? [];
+  const logCalls = body.match(/logStep\([^\n]*/g) ?? [];
 
   it("has logStep calls to inspect", () => {
     expect(logCalls.length).toBeGreaterThan(3);
@@ -123,6 +122,48 @@ describe("create-addon-checkout logs no customer PII", () => {
     const leaks = logCalls.filter(
       (call) => /[eE]mail/.test(call) && !/(!!|has[A-Z]|redacted)/.test(call),
     );
-    expect(leaks, `PII leak in logStep:\\n${leaks.join("\\n")}`).toEqual([]);
+    expect(leaks, `PII leak in logStep:\n${leaks.join("\n")}`).toEqual([]);
+  });
+});
+
+describe("ticketing functions log no customer email or raw promo codes", () => {
+  const SAFE = /(!!|has[A-Z]|_ref\b|fingerprint\(|redacted|null)/;
+
+  const checkout = readFileSync(`${BACKEND_ROOT}/create-cosmico-checkout/index.ts`, "utf8");
+  const promo = readFileSync(`${BACKEND_ROOT}/validate-promo-code/index.ts`, "utf8");
+
+  const logCallsOf = (body: string, fnNames: string[]) =>
+    fnNames.flatMap((name) => body.match(new RegExp(`${name}\\([^\\n]*`, "g")) ?? []);
+
+  const checkoutLogs = logCallsOf(checkout, ["console\\.log", "console\\.error"]);
+  const promoLogs = logCallsOf(promo, ["logLine"]);
+
+  it("has log calls to inspect", () => {
+    expect(checkoutLogs.length).toBeGreaterThan(3);
+    expect(promoLogs.length).toBeGreaterThan(3);
+  });
+
+  it("create-cosmico-checkout never logs an email value", () => {
+    const leaks = checkoutLogs.filter((c) => /[eE]mail/.test(c) && !SAFE.test(c));
+    expect(leaks, `PII leak:\n${leaks.join("\n")}`).toEqual([]);
+  });
+
+  it("create-cosmico-checkout never logs a raw promo code", () => {
+    const leaks = checkoutLogs.filter((c) => /promo\.code|\bcode:/.test(c));
+    expect(leaks, `promo code leak:\n${leaks.join("\n")}`).toEqual([]);
+  });
+
+  it("validate-promo-code never logs an email or raw code value", () => {
+    const leaks = promoLogs.filter(
+      (c) => /(\bemail\b|\bcode\b|promo\.code)(?!_ref)/.test(c) && !SAFE.test(c),
+    );
+    expect(leaks, `PII leak:\n${leaks.join("\n")}`).toEqual([]);
+  });
+
+  it("validate-promo-code records no email or raw code in checkout_errors", () => {
+    const insert = promo.match(/from\("checkout_errors"\)\s*\.insert\(\{[\s\S]*?\}\)/)?.[0] ?? "";
+    expect(insert).toContain("user_email: null");
+    expect(insert).not.toContain("attempted_code: code");
+    expect(insert).toMatch(/code_ref/);
   });
 });
