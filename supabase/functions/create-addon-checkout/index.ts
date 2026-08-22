@@ -49,7 +49,7 @@ serve(async (req) => {
       throw new Error("Customer email is required");
     }
 
-    logStep("Request validated", { itemCount: items.length, registrationId, customerEmail });
+    logStep("Request validated", { itemCount: items.length, registrationId, hasCustomerEmail: !!customerEmail });
 
     // Initialize Supabase admin client
     const supabaseAdmin = createClient(

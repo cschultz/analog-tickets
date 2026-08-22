@@ -109,3 +109,20 @@ describe("backend fails closed without configuration", () => {
     expect(bad.map(([f]) => f)).toEqual([]);
   });
 });
+
+
+describe("create-addon-checkout logs no customer PII", () => {
+  const body = readFileSync(`${BACKEND_ROOT}/create-addon-checkout/index.ts`, "utf8");
+  const logCalls = body.match(/logStep\\([^\\n]*/g) ?? [];
+
+  it("has logStep calls to inspect", () => {
+    expect(logCalls.length).toBeGreaterThan(3);
+  });
+
+  it("never passes an email value into logStep", () => {
+    const leaks = logCalls.filter(
+      (call) => /[eE]mail/.test(call) && !/(!!|has[A-Z]|redacted)/.test(call),
+    );
+    expect(leaks, `PII leak in logStep:\\n${leaks.join("\\n")}`).toEqual([]);
+  });
+});
