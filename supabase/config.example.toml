@@ -1,0 +1,4 @@
+# Example Supabase CLI config. Copy to supabase/config.toml and set your own
+# project ref. supabase/config.toml is git-ignored so no real project
+# reference is ever committed to this repository.
+project_id = "<your-supabase-project-ref>"
