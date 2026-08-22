@@ -48,10 +48,12 @@ surface will fail until a schema exists. Producing that baseline is a
 **separate Gate 5 slice** and is intentionally out of scope here — nothing in
 this slice creates or modifies schema.
 
-## License decision — PLACEHOLDER
+## License decision
 
-**No license has been chosen yet.** Until a `LICENSE` file is added, this code
-is *not* open source and carries no grant of rights. The license decision is
-deferred to a later gate.
+The repository is licensed under the **Apache License 2.0**. The authoritative
+license text is in the root [`LICENSE`](../LICENSE) file. This project license
+does not clear third-party fonts, photography, video, logos, or dependency
+attribution obligations; those remain explicit public-release gates.
 
-<!-- TODO(gate5): choose and add a LICENSE file (candidates: MIT, Apache-2.0). -->
+The private repository is a staging source only. Choosing Apache-2.0 does not
+authorize a public GitHub release or Lovable publication.

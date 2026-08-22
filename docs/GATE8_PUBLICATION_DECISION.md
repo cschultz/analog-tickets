@@ -4,7 +4,11 @@
 
 **Date:** 2026-08-21
 
-**Verified baseline commit:** `c1dc847f7de4e708db5104600046bac22b1e6007`
+**Verified private GitHub baseline:** `e55a3d0522d17e1b9b73f4014e0564957936f552`
+
+> Historical note: this record began before the separate private GitHub
+> repository existed. Current repository status is authoritative in
+> [`CURRENT_RELEASE_STATUS.md`](CURRENT_RELEASE_STATUS.md).
 
 **Scope:** This document records the current publication-readiness state of the
 private `festival-platform` project. It applies only to the private working copy
@@ -16,7 +20,8 @@ or deployment.
 ## Current State
 
 - The project is **private and unpublished**.
-- The project is **not connected to GitHub**.
+- A separate private `cschultz/analog-tickets` GitHub repository exists with a
+  fresh sanitized history. The Lovable project is not connected to GitHub.
 - **Production Cosmi** data, services, domains, and secrets remain isolated from
   this repository and were not modified by any open-source readiness gate.
 - No publication, visibility change, or deployment action has been performed.
@@ -73,11 +78,12 @@ Static proof: `src/test/backend-identifiers.test.ts`.
    legacy wording (`create-cosmico-checkout`, `sync-ar2026-only`). Retained
    deliberately: they are the deployed invoke contract. Not judged a blocker,
    recorded for transparency.
-3. **Git history** — the repository history still contains every pre-scrub
-   value. A fresh repository or a full history rewrite is mandatory before any
-   public release.
-4. **GitHub canonical-source setup** — the project is not connected to GitHub,
-   has no public repository, and has no scrubbed commit history.
+3. **Public-release clearance** — the private repository's fresh history is
+   suitable for staging, but public release still requires the dependency,
+   backend/security, and media-rights gates below plus Chris's explicit
+   publication authorization.
+4. **Lovable publication settings** — the project remains private and
+   unpublished; no public remix or Trust Center decision has been made.
 
 These remaining blockers require separate approval.
 
@@ -105,7 +111,8 @@ secret rotation, no production invocation):
 Approval to connect the project to GitHub, create or expose a public repository,
 change Lovable project visibility, or publish a Lovable remix template:
 
-- GitHub repository creation and history scrubbing.
+- Public GitHub release authorization (the private repository already exists
+  and has fresh sanitized history).
 - Lovable project visibility, badge, and Trust Center settings.
 - Final publication authorization (public GitHub release, Lovable remix, or
   both).
@@ -114,9 +121,10 @@ change Lovable project visibility, or publish a Lovable remix template:
 
 ## Authorization Statement
 
-**No public release is authorized by this document.** The project remains
-private, unpublished, and unconnected to GitHub. Any future release requires the
-two-part approvals listed above and resolution of all remaining release blockers.
+**No public release is authorized by this document.** The Lovable project remains
+private and unpublished, while the separate `cschultz/analog-tickets` GitHub
+repository remains private. Any future release requires the two-part approvals
+listed above and resolution of all remaining release blockers.
 
 ---
 

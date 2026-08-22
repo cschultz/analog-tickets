@@ -133,12 +133,12 @@
 
 | # | Check | Status | Notes |
 |---|-------|--------|-------|
-| 8.1 | GitHub repository created and configured with no secrets in history | ❌ unresolved | GitHub integration not connected; commit history still contains prior identifiers in older commits |
-| 8.2 | `.gitignore` and history scrubbed for any leaked `.env` or `config.toml` | ❌ unresolved | Requires a new history-rewrite or new repo start; current working copy is clean but history is not |
-| 8.3 | Lovable remix template settings reviewed (visibility, badge, Trust Center) | ❌ unresolved | No publication settings changed; default visibility unknown until publish |
+| 8.1 | GitHub repository created and configured with no secrets in history | ✅ verified | Separate private `cschultz/analog-tickets` repository was created from a fresh sanitized transfer; no public release was made |
+| 8.2 | `.gitignore` and history scrubbed for any leaked `.env` or `config.toml` | ✅ verified | The private repository has fresh history and excludes `.env`/`supabase/config.toml`; public publication remains deferred |
+| 8.3 | Lovable remix template settings reviewed (visibility, badge, Trust Center) | ⚠️ partial | Lovable is verified private and unpublished; public-template settings have intentionally not been reviewed or changed |
 | 8.4 | `README.md` describes the project as a remixable template, not a live event | ✅ verified | README genericized to festival platform |
-| 8.5 | Issue templates and contribution guidelines prepared | ❌ unresolved | Not created |
-| 8.6 | Code of conduct and security policy prepared | ❌ unresolved | Not created |
+| 8.5 | Issue templates and contribution guidelines prepared | ✅ verified | `.github/ISSUE_TEMPLATE/` and `CONTRIBUTING.md` are present in the private repository |
+| 8.6 | Code of conduct and security policy prepared | ✅ verified | `CODE_OF_CONDUCT.md` and `SECURITY.md` are present in the private repository |
 
 **Approver sign-off:** ___________________ Chris Schultz
 
@@ -185,8 +185,8 @@ I, Chris Schultz, confirm the following before any public release:
 | Backend / RLS | 2 | 1 | 4 | 0 |
 | Security | 6 | 0 | 3 | 0 |
 | Fresh-Clone / Remixer | 5 | 1 | 0 | 0 |
-| GitHub / Lovable Remix | 1 | 0 | 5 | 0 |
+| GitHub / Lovable Remix | 5 | 1 | 0 | 0 |
 | Production Isolation | 5 | 0 | 0 | 0 |
-| **Total** | **33** | **6** | **18** | **0** |
+| **Total** | **37** | **7** | **13** | **0** |
 
-**Release recommendation:** **NOT READY** — 18 unresolved items remain. Do not publish to GitHub or as a Lovable remix until the approval fields above are completed and the unresolved items are resolved.
+**Release recommendation:** **NOT READY** — 13 unresolved items remain. Do not publish publicly to GitHub or as a Lovable remix until the approval fields above are completed and the unresolved items are resolved.
