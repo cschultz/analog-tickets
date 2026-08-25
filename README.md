@@ -1,104 +1,65 @@
 # Analog Tickets — festival website + ticketing platform
 
-**Analog Tickets** is a free, remixable platform for running a small independent
-gathering: a marketing/presentation site, a ticketing and checkout flow,
-box-office check-in, and an admin layer — all driven by a single event
-configuration.
+**Analog Tickets** is a free, remixable platform for running a small independent gathering: a presentation site, ticketing and checkout flow, box-office check-in, and admin layer driven by one event configuration.
 
-It is part of **Analog Commons**, the open-source commons for mission-aligned
-analog experiences.
+It is part of **Analog Commons**, Launch Pad Foundation's open-source commons for mission-aligned analog experiences.
 
 ## Brand architecture
 
 | Name | What it is |
 | --- | --- |
-| Analog Commons | The open-source commons for mission-aligned analog experiences (umbrella). |
-| Analog Tickets | The free, remixable ticketing and festival-site platform in this repository. |
-| Cosmico | A festival we previously created. It is **not** an active event — it lives on as the demonstration site for Analog Tickets. |
+| Analog Commons | The open-source commons for mission-aligned analog experiences. |
+| Analog Tickets | The free, remixable festival-site and ticketing platform in this repository. |
+| Cosmico | A former Launch Pad Foundation festival used privately as the demonstration site's mythology and design reference. It is not an active event. |
 
-The names above live in one place, `src/platform/branding.ts`, together with the
-demonstration-site disclaimer copy. Change them there when you remix.
+The production Cosmi/Cosmico system is separate and is not included in, connected to, or required by this repository.
 
-### About the demonstration site
+## What is public here
 
-Cosmico was a festival we previously created. We no longer produce it as an
-active event. It lives on here as a demonstration of Analog Tickets, in the hope
-that others create their own analog experiences. The demo shows no current
-lineup, no event date and no ticket availability — tickets and bookings are not
-available.
+This repository is the **public source release** of Analog Tickets under the Apache-2.0 license. It contains generic code, documentation, tests, configuration examples, and a small set of placeholder asset pointers. Uncleared event photography, production-era media, customer data, credentials, live integrations, and production database/schema state are intentionally excluded.
 
-The demo event *data* in this repository (schedule, venue, vendors) is
-fictional placeholder content: `example.org` / `example.test` are placeholder
-domains that never resolve.
+This is a source release, not a live festival launch. The private Lovable preview and Cosmico demo remain unpublished and are not a current event, ticket offer, or marketing destination.
 
-## Platform modes
+## Remixing
 
-The app can run as a site only, a ticketing surface only, or both. See
-[`docs/PLATFORM_MODES.md`](docs/PLATFORM_MODES.md) for `VITE_PLATFORM_MODE`.
-
-## Event configuration
-
-Event identity, schedule/timezone, venue, capacity, commerce rules, module
-flags and integration selections live in a typed, validated `EventConfig`:
-
-- Contract: `src/platform/config/eventConfig.ts`
-- Demo event: `src/events/analog-commons/config.ts`
-- Loader/registry: `src/platform/config/loadEventConfig.ts`
-- React access: `EventConfigProvider` / `useEventConfig`
-
-To add your own event, copy the demo config to `src/events/<your-event>/config.ts`,
-edit the values, and register it in the loader. Never put an API key, token or
-secret in an event config.
-
-## Secrets
-
-No credentials are committed to this repository. Copy `.env.example` to a local
-`.env` (git-ignored) and supply your own values; backend/integration secrets are
-provided to the runtime separately. See [`docs/SECRETS_SETUP.md`](docs/SECRETS_SETUP.md).
-
-## Remixing in Lovable
-
-This project is built with Lovable. Remix or open it in Lovable and start
-prompting — changes sync to the connected repository. You can also work locally
-with any IDE.
+Clone the repository or remix it in Lovable, then connect your own backend and infrastructure:
 
 ```sh
-git clone <YOUR_GIT_URL>
-cd <YOUR_PROJECT_NAME>
-npm i
+git clone https://github.com/cschultz/analog-tickets.git
+cd analog-tickets
+npm ci
+cp .env.example .env
 npm run dev
 ```
 
-Publish from Lovable via Share → Publish, and connect a custom domain under
-Project → Settings → Domains.
+No credentials are committed. `VITE_*` values are public client configuration only; never put server secrets in them. See [docs/SECRETS_SETUP.md](docs/SECRETS_SETUP.md) and [docs/REMIXER_BACKEND_CONTRACT.md](docs/REMIXER_BACKEND_CONTRACT.md).
 
-## Tech stack
+## Platform modes
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+The app can run as a site only, ticketing only, or an integrated site and ticketing surface. See [docs/PLATFORM_MODES.md](docs/PLATFORM_MODES.md).
 
-## Legal pages
+Event identity, schedule, venue, capacity, commerce rules, module flags, and integration selections belong in the typed `EventConfig` contract:
 
-`/terms`, `/privacy` and the giveaway rules are **illustrative placeholders** for
-the demo event. They are not legal advice; replace them with policies reviewed
-by your own counsel before publishing.
+- `src/platform/config/eventConfig.ts`
+- `src/events/analog-commons/config.ts`
+- `src/platform/config/loadEventConfig.ts`
 
-## Status
+Copy the demo config to `src/events/<your-event>/config.ts` when remixing. Never put an API key, token, or secret in event configuration.
 
-Ongoing modularization notes live in
-[`docs/OPEN_SOURCE_SANITIZATION_STATUS.md`](docs/OPEN_SOURCE_SANITIZATION_STATUS.md).
-Event-specific media assets, edge functions and internal runbooks are still
-being genericized in later passes.
+## Assets and credits
 
-## Canonical source and remix workflow
+The public repository intentionally excludes uncleared and production-era media. The only approved temporary placeholders are documented in [docs/ASSET_RELEASE_GATE.md](docs/ASSET_RELEASE_GATE.md); replace them with assets whose redistribution rights you control before launching your own event. Do not add photographs of identifiable people, minors, venues, artists, or partners without appropriate rights and releases.
 
-GitHub is intended as the future canonical public source for this project, while
-Lovable remains the remix and build experience. The production Cosmi system is a
-separate, private deployment and is never the source for public remixes. See
-[`docs/GITHUB_CANONICAL_SOURCE.md`](docs/GITHUB_CANONICAL_SOURCE.md) for the
-proposed flow, repository hygiene expectations, and what is intentionally not
-automated yet.
+## Legal and operational status
 
+`/terms`, `/privacy`, and giveaway rules are illustrative templates, not legal advice. Review and replace them before operating a real event.
+
+Fresh-backend end-to-end validation, payment-provider setup, webhook verification, and live integration testing are intentionally deferred to each remixer. The public source has not been connected to a live backend.
+
+## Stewardship
+
+Analog Tickets is stewarded by **Launch Pad Foundation**. The project is provided as-is, with no support or hosting promise. Contributions and remixers should read [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+## License
+
+Apache-2.0. See [LICENSE](LICENSE).
