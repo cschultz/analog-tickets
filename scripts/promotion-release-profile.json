@@ -1,0 +1,107 @@
+{
+  "sourceSha256": "8943d805d051db33089319d5c73b616071153ba58fa68cd87730019d75efc120",
+  "profiles": {
+    "standard": {
+      "baseline": {
+        "roles": "2e7ca82009a08eb42cd49641768392be",
+        "types": "e502788b6855042f831e6fc5cce43ba3",
+        "columns": "ee7fef083e2ae24d354fc3c5ab7c998d",
+        "indexes": "82161b0a65c86aea8ced23b4fd70b8ed",
+        "policies": "b0e245fb440fe2d03709c4af83b0cdf0",
+        "routines": "a0e0c4e4d0fda7a7d426bb46029e0a1e",
+        "triggers": "9cb80bac9a34c1993df37d179478737d",
+        "relations": "af1601b7eb0146d7b9a33e8621696fa2",
+        "constraints": "14dc86a36eed9bc6079f5e95c3cc076c",
+        "tablePrivileges": "a67cf766dc0ee3ee6887f6bd85c8ecf8",
+        "columnPrivileges": "2a4b2adca5423594e33f1f5a99dd5a34",
+        "directPrivileges": "7d5018809e2ba0af78db019a598877d2",
+        "defaultPrivileges": "24997da7a62a87df38a61fe29cfa2f8d",
+        "routinePrivileges": "e5430c773bae2ab6dacf36c348eb9a24"
+      },
+      "release": {
+        "roles": "2e7ca82009a08eb42cd49641768392be",
+        "types": "4953559d3160db58dca47739fc1aa8ae",
+        "columns": "2c3254a79e4b129c74214d4404264f57",
+        "indexes": "49c2158c70680934d233dc2a14a58e84",
+        "policies": "b0e245fb440fe2d03709c4af83b0cdf0",
+        "routines": "9952ec76f020c9734fffd2d47abc335f",
+        "triggers": "25467ba6bdd90877e061ebc4f58cf1ca",
+        "relations": "bd0dbb46ab98a17b03d4435cf78a663d",
+        "constraints": "b5493ab83443470650ba570224634714",
+        "tablePrivileges": "7a4ce2525f9714877ab5138bb95af756",
+        "columnPrivileges": "a401d4ff6e0917d6cab30b851c961085",
+        "directPrivileges": "f767782679bce42b541db75dfc245e63",
+        "defaultPrivileges": "24997da7a62a87df38a61fe29cfa2f8d",
+        "routinePrivileges": "58d925a1eaec21b2a2455d559d2eee31"
+      }
+    },
+    "supabase": {
+      "baseline": {
+        "roles": "2e7ca82009a08eb42cd49641768392be",
+        "types": "e502788b6855042f831e6fc5cce43ba3",
+        "columns": "ee7fef083e2ae24d354fc3c5ab7c998d",
+        "indexes": "82161b0a65c86aea8ced23b4fd70b8ed",
+        "policies": "b0e245fb440fe2d03709c4af83b0cdf0",
+        "routines": "a0e0c4e4d0fda7a7d426bb46029e0a1e",
+        "triggers": "9cb80bac9a34c1993df37d179478737d",
+        "relations": "af1601b7eb0146d7b9a33e8621696fa2",
+        "constraints": "14dc86a36eed9bc6079f5e95c3cc076c",
+        "tablePrivileges": "a67cf766dc0ee3ee6887f6bd85c8ecf8",
+        "columnPrivileges": "2a4b2adca5423594e33f1f5a99dd5a34",
+        "directPrivileges": "20c18880f025d4173a184d4cdddae8ab",
+        "defaultPrivileges": "465ff8a86dbfe51e0281f3c45a45bfae",
+        "routinePrivileges": "2400bffc47dbe48450adee6bfa5f8cc5"
+      },
+      "release": {
+        "roles": "2e7ca82009a08eb42cd49641768392be",
+        "types": "4953559d3160db58dca47739fc1aa8ae",
+        "columns": "2c3254a79e4b129c74214d4404264f57",
+        "indexes": "49c2158c70680934d233dc2a14a58e84",
+        "policies": "b0e245fb440fe2d03709c4af83b0cdf0",
+        "routines": "9952ec76f020c9734fffd2d47abc335f",
+        "triggers": "25467ba6bdd90877e061ebc4f58cf1ca",
+        "relations": "bd0dbb46ab98a17b03d4435cf78a663d",
+        "constraints": "b5493ab83443470650ba570224634714",
+        "tablePrivileges": "7a4ce2525f9714877ab5138bb95af756",
+        "columnPrivileges": "a401d4ff6e0917d6cab30b851c961085",
+        "directPrivileges": "a221e248562db69aeb0865e659fea291",
+        "defaultPrivileges": "465ff8a86dbfe51e0281f3c45a45bfae",
+        "routinePrivileges": "e9d1e3b0ec5165d8016847075e2e7668"
+      }
+    },
+    "managed": {
+      "baseline": {
+        "roles": "2e7ca82009a08eb42cd49641768392be",
+        "types": "e502788b6855042f831e6fc5cce43ba3",
+        "columns": "ee7fef083e2ae24d354fc3c5ab7c998d",
+        "indexes": "82161b0a65c86aea8ced23b4fd70b8ed",
+        "policies": "b0e245fb440fe2d03709c4af83b0cdf0",
+        "routines": "a0e0c4e4d0fda7a7d426bb46029e0a1e",
+        "triggers": "9cb80bac9a34c1993df37d179478737d",
+        "relations": "af1601b7eb0146d7b9a33e8621696fa2",
+        "constraints": "14dc86a36eed9bc6079f5e95c3cc076c",
+        "tablePrivileges": "a67cf766dc0ee3ee6887f6bd85c8ecf8",
+        "columnPrivileges": "2a4b2adca5423594e33f1f5a99dd5a34",
+        "directPrivileges": "821b218caa0ed484b7dd1c5f320ceb91",
+        "defaultPrivileges": "04b3b4f857ba9ac3c67c63ed2948bffb",
+        "routinePrivileges": "2400bffc47dbe48450adee6bfa5f8cc5"
+      },
+      "release": {
+        "roles": "2e7ca82009a08eb42cd49641768392be",
+        "types": "4953559d3160db58dca47739fc1aa8ae",
+        "columns": "2c3254a79e4b129c74214d4404264f57",
+        "indexes": "49c2158c70680934d233dc2a14a58e84",
+        "policies": "b0e245fb440fe2d03709c4af83b0cdf0",
+        "routines": "9952ec76f020c9734fffd2d47abc335f",
+        "triggers": "25467ba6bdd90877e061ebc4f58cf1ca",
+        "relations": "bd0dbb46ab98a17b03d4435cf78a663d",
+        "constraints": "b5493ab83443470650ba570224634714",
+        "tablePrivileges": "7a4ce2525f9714877ab5138bb95af756",
+        "columnPrivileges": "a401d4ff6e0917d6cab30b851c961085",
+        "directPrivileges": "6ac1ab2663eae4abff4a736af98d696a",
+        "defaultPrivileges": "04b3b4f857ba9ac3c67c63ed2948bffb",
+        "routinePrivileges": "e9d1e3b0ec5165d8016847075e2e7668"
+      }
+    }
+  }
+}

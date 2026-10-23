@@ -1,54 +1,21 @@
-import { defineConfig, type PluginOption } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import path from "path";
-import { componentTagger } from "lovable-tagger";
-import { visualizer } from "rollup-plugin-visualizer";
+// @lovable.dev/vite-tanstack-config already includes the following — do NOT add them manually
+// or the app will break with duplicate plugins:
+//   - TanStack devtools (dev-only, first), tanstackStart, viteReact, tailwindcss, tsConfigPaths,
+//     nitro (build-only using cloudflare as a default target), VITE_* env injection, @ path alias,
+//     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
+// You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
+import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { publicSupabaseBuildEnv } from "./src/lib/public-supabase-build-env";
 
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  server: {
-    host: "::",
-    port: 8080,
+// Lovable's standalone build may receive these public values under their
+// server-side names. Promote only the URL and publishable key, never privileged
+// Supabase credentials. Existing VITE_* values always win.
+Object.assign(process.env, publicSupabaseBuildEnv(process.env));
+
+export default defineConfig({
+  tanstackStart: {
+    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
+    // nitro/vite builds from this
+    server: { entry: "server" },
   },
-  plugins: [
-    react(),
-    {
-      name: 'cache-bust-version',
-      transformIndexHtml(html: string) {
-        return html.replace('__BUILD_TS__', Date.now().toString(36));
-      },
-    },
-    mode === "development" && componentTagger(),
-    mode === "production" && visualizer({
-      filename: 'dist/stats.html',
-      open: false,
-      gzipSize: true,
-      brotliSize: true,
-    }),
-  ].filter(Boolean) as PluginOption[],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-  build: {
-    sourcemap: true,
-    // NOTE: Vite's default output filenames include a content hash
-    // (assets/[name]-[hash].js, assets/[name]-[hash].css). DO NOT override
-    // entryFileNames / chunkFileNames / assetFileNames to remove the hash —
-    // hashed asset names are what makes long-term HTTP caching of /assets/*
-    // safe. Only index.html (which references assets by hashed name) needs
-    // to be revalidated on each deploy. Cache-busting in index.html + the
-    // runtime version poll in src/main.tsx handle that.
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-          'vendor-charts': ['recharts'],
-          'vendor-ui': ['@radix-ui/react-dialog', '@radix-ui/react-tabs', '@radix-ui/react-select'],
-          'vendor-dnd': ['@dnd-kit/core', '@dnd-kit/sortable', '@dnd-kit/utilities'],
-        },
-      },
-    },
-  },
-}));
+});

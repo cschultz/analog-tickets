@@ -1,7 +1,17 @@
-# Security policy
+# Security reporting
 
-Please do not report security vulnerabilities in public issues.
+Report suspected Analog Tickets vulnerabilities privately to **chris@lp.co**,
+the Launch Pad Foundation contact designated for security reports.
+Do not use a public issue or the general website contact form for vulnerability
+details. This email destination does not promise encrypted delivery or a
+particular response time, and no bounty or paid support is implied.
 
-Email the maintainers through the current Launch Pad Foundation security contact listed in the repository's private maintainer configuration. Do not include credentials, customer data, payment details, or exploit code in an initial report.
+Include the version or source-manifest identifier, affected feature, expected
+versus observed behavior, and reproduction steps using synthetic data. Do not
+send passwords, API keys, access tokens, real customer records or payment data.
+Redact sensitive details from screenshots and logs.
 
-If a report may affect a deployed event, contact that event's operator directly as well; this repository is a template and has no shared production backend. Each remixer is responsible for securing their own deployment, secrets, database, storage, and integrations.
+The current release is a TEST beta, not a certification for real-money use.
+Operators remain responsible for their deployment and updates. Until a fix or
+workaround is coordinated, avoid publishing exploitable details or testing
+against other organizers' installations without their authorization.

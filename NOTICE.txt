@@ -1,0 +1,21 @@
+Analog Tickets
+Licensor: Launch Pad Foundation
+Required Notice: Copyright 2026 Launch Pad Foundation. Original Analog Tickets code and documentation; third-party rights and earlier grants remain unaffected.
+Licensor Line of Business: Event ticketing software and ticketing platform products and services for third-party event organizers.
+
+License: PolyForm Shield 1.0.0 with Analog Tickets Additional Permissions.
+Read LICENSE.md, ADDITIONAL_PERMISSIONS.md and licenses/PolyForm-Shield-1.0.0.txt.
+Keep this notice and the applicable upstream notices when distributing copies.
+This is not a license for festival media or marks and is not a claim of ownership
+over third-party components or private engineering material outside this package.
+
+Prior public source: cschultz/analog-tickets at
+c5a1dcfd12590d9797c4cce549fa6a782a8370b4 was distributed under Apache-2.0.
+Its prior grant remains valid, including for applicable retained portions.
+Read licenses/Apache-2.0-prior-source.txt and docs/PRIOR_SOURCE_LICENSES.md.
+Neither Shield nor the additional permissions withdraw those earlier rights.
+
+Commercial inquiries: chris@lp.co
+Contact form: https://lp.foundation/about
+Mailing contact: Launch Pad Foundation, 455 Market St, Ste 1940, PMB 78424,
+San Francisco, CA 94105. Not a designation of legal headquarters.

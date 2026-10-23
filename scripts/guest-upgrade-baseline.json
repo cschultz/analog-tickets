@@ -1,0 +1,19 @@
+{
+  "baselineSha256": "b4a601ace35acf5d38bf4c654b926cf3e429b422a7add965f19a2d34ab12e6d2",
+  "fingerprints": {
+    "roles": "2e7ca82009a08eb42cd49641768392be",
+    "types": "e827ef7d284945abb42b57ee2b67f210",
+    "columns": "647ab3b32ab043b27ffa745c706ab3a8",
+    "indexes": "c6cb01fcb644cdb2fe1eb94e10247621",
+    "policies": "b0e245fb440fe2d03709c4af83b0cdf0",
+    "routines": "bc77ef0d643bd5d055036d8e0705a9f9",
+    "triggers": "64c6e6070ecedd9794936ca01482f46e",
+    "relations": "a144228acefb6cf60858ca53b7aad676",
+    "constraints": "12b0363218c8717e9a5ef4715e511e09",
+    "tablePrivileges": "43441a12a2e843c9c94cf9cf75b2280e",
+    "columnPrivileges": "3aa7c97deaf390973ced227d80809d03",
+    "directPrivileges": "dfe39f1e1be12aac785f4d6d4af87711",
+    "defaultPrivileges": "24997da7a62a87df38a61fe29cfa2f8d",
+    "routinePrivileges": "bc83332088b94a7c6e98bafe793fd661"
+  }
+}
