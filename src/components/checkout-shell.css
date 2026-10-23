@@ -1,0 +1,444 @@
+.ticket-checkout {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.25 0 0);
+  --muted: oklch(0.97 0.002 90);
+  --muted-foreground: oklch(0.46 0 0);
+  --border: oklch(0.87 0.003 90);
+  --input: var(--border);
+  --primary: var(--checkout-brand-accent);
+  --primary-foreground: oklch(1 0 0);
+  --accent: var(--muted);
+  --accent-foreground: var(--foreground);
+  --ring: var(--primary);
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color-scheme: light;
+}
+.ticket-checkout *,
+.ticket-checkout *::before,
+.ticket-checkout *::after {
+  box-sizing: border-box;
+}
+.ticket-checkout .checkout-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+}
+.ticket-checkout .checkout-header-inner {
+  max-width: 1120px;
+  min-height: 88px;
+  margin: auto;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.ticket-checkout .checkout-brand {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.ticket-checkout .checkout-brand img {
+  width: 112px;
+  height: 56px;
+  object-fit: contain;
+}
+.ticket-checkout .checkout-brand-fallback {
+  display: none;
+}
+.ticket-checkout .checkout-brand:has(img[hidden]) .checkout-brand-fallback {
+  display: inline;
+}
+.ticket-checkout a {
+  text-underline-offset: 4px;
+}
+.ticket-checkout .checkout-back {
+  color: var(--muted-foreground);
+  text-decoration: underline;
+}
+.ticket-checkout .checkout-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  max-width: 1120px;
+  margin: auto;
+  min-height: calc(100vh - 89px);
+}
+.ticket-checkout .checkout-main {
+  min-width: 0;
+  padding: 40px 48px 64px 32px;
+}
+.ticket-checkout .checkout-summary {
+  min-width: 0;
+  background: var(--muted);
+  border-left: 1px solid var(--border);
+  padding: 40px 32px 64px 40px;
+}
+.ticket-checkout .checkout-summary-inner {
+  position: sticky;
+  top: 120px;
+}
+.ticket-checkout .checkout-progress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 0;
+  margin: 0 0 28px;
+  list-style: none;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.ticket-checkout .checkout-progress li + li::before {
+  content: "›";
+  margin-right: 16px;
+}
+.ticket-checkout .checkout-progress [aria-current="step"] {
+  color: var(--foreground);
+  font-weight: 600;
+}
+.ticket-checkout .checkout-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.ticket-checkout h1 {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.ticket-checkout h2 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.ticket-checkout h3 {
+  font-size: 15px;
+  font-weight: 600;
+}
+.ticket-checkout .checkout-test-label {
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 3px;
+}
+.ticket-checkout .checkout-note {
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+.ticket-checkout .checkout-intro {
+  margin-bottom: 32px;
+}
+.ticket-checkout .checkout-section {
+  margin-top: 28px;
+}
+.ticket-checkout .checkout-section p + p {
+  margin-top: 12px;
+}
+.ticket-checkout .checkout-form {
+  display: grid;
+  gap: 10px;
+}
+.ticket-checkout .checkout-promo-fields {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  display: grid;
+  gap: 12px;
+}
+.ticket-checkout .checkout-promo-entry {
+  border-top: 1px solid var(--checkout-line, #d9dedb);
+  padding-top: 18px;
+  margin: 8px 0;
+}
+.ticket-checkout .checkout-promo-entry summary {
+  cursor: pointer;
+  min-height: 48px;
+  padding: 12px 0;
+  font-weight: 600;
+}
+.ticket-checkout .checkout-promo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+.ticket-checkout .checkout-promo-fields:disabled {
+  opacity: 0.7;
+}
+.ticket-checkout .organizer-results {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 24px 0;
+}
+.ticket-checkout .organizer-results table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.ticket-checkout .organizer-results :is(th, td) {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+.ticket-checkout .organizer-results code {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.ticket-checkout .organizer-results:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.ticket-checkout .checkout-form h2 {
+  margin-bottom: 12px;
+}
+.ticket-checkout .checkout-ticket-choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.ticket-checkout .checkout-quantity {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--input);
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.ticket-checkout .checkout-quantity button {
+  min-width: 48px;
+  min-height: 48px;
+  font-size: 22px;
+}
+.ticket-checkout .checkout-quantity button:disabled {
+  opacity: 0.35;
+}
+.ticket-checkout .checkout-quantity output {
+  min-width: 32px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.ticket-checkout .checkout-name-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.ticket-checkout .checkout-name-fields > div {
+  display: grid;
+  gap: 10px;
+}
+@media (max-width: 480px) {
+  .ticket-checkout .checkout-name-fields {
+    grid-template-columns: 1fr;
+  }
+}
+.ticket-checkout .checkout-form label {
+  font-weight: 500;
+}
+.ticket-checkout .checkout-form :is(input, select) {
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 12px;
+  border: 1px solid var(--input);
+  border-radius: 5px;
+  background: var(--background);
+  color: var(--foreground);
+  font: inherit;
+}
+.ticket-checkout .checkout-form input + label {
+  margin-top: 8px;
+}
+.ticket-checkout .organizer-promotions button {
+  min-height: 48px;
+  white-space: normal;
+}
+.ticket-checkout .organizer-promotions {
+  overflow-wrap: anywhere;
+}
+.ticket-checkout :is(a, button, input, select, summary):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+.ticket-checkout .checkout-action {
+  min-height: 48px;
+  height: auto;
+  border-radius: 5px;
+  white-space: normal;
+  text-align: center;
+  padding: 12px 18px;
+  font: inherit;
+  font-weight: 600;
+  transition: none;
+  box-shadow: none;
+}
+.ticket-checkout .checkout-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.ticket-checkout .checkout-primary:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--primary) 88%, white);
+}
+.ticket-checkout .checkout-primary:active:not(:disabled) {
+  background: color-mix(in oklab, var(--primary) 90%, black);
+}
+.ticket-checkout .checkout-secondary {
+  background: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+.ticket-checkout .checkout-action:disabled {
+  opacity: 0.5;
+}
+.ticket-checkout .checkout-form .checkout-action {
+  margin-top: 14px;
+}
+.ticket-checkout .checkout-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+.ticket-checkout .checkout-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ticket-checkout .checkout-text-action {
+  color: var(--muted-foreground);
+  padding: 0;
+  height: auto;
+  min-height: 44px;
+  background: none;
+  text-decoration: underline;
+  transition: none;
+}
+.ticket-checkout .checkout-recovery {
+  margin-top: 24px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+.ticket-checkout .checkout-recovery summary {
+  cursor: pointer;
+  font-weight: 500;
+  min-height: 44px;
+}
+.ticket-checkout .checkout-status {
+  margin-top: 20px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+.ticket-checkout .checkout-deadline {
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+.ticket-checkout .checkout-payment-note {
+  margin-top: 24px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+.ticket-checkout .checkout-ticket-link {
+  display: inline-block;
+  margin-top: 16px;
+  text-decoration: underline;
+}
+.ticket-checkout .checkout-summary h2 {
+  margin-bottom: 24px;
+}
+.ticket-checkout .checkout-summary h3 {
+  margin-bottom: 8px;
+  overflow-wrap: anywhere;
+}
+.ticket-checkout .checkout-summary dl {
+  margin-top: 24px;
+}
+.ticket-checkout .checkout-price-breakdown > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 12px 0;
+}
+.ticket-checkout .checkout-price-breakdown dt {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.ticket-checkout .checkout-price-breakdown dd {
+  margin: 0;
+  flex-shrink: 0;
+  text-align: right;
+}
+.ticket-checkout .checkout-summary dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 12px;
+}
+.ticket-checkout .checkout-summary dd {
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+.ticket-checkout .checkout-money {
+  font-variant-numeric: tabular-nums;
+}
+.ticket-checkout .checkout-subtotal {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  font-weight: 600;
+}
+.ticket-checkout .checkout-subtotal dd {
+  font-size: 18px;
+}
+.ticket-checkout .checkout-summary .checkout-note {
+  margin-top: 20px;
+}
+.ticket-checkout .checkout-footer {
+  margin-top: 36px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+@media (max-width: 760px) {
+  .ticket-checkout .checkout-header-inner {
+    padding: 12px 20px;
+    min-height: 80px;
+  }
+  .ticket-checkout .checkout-layout {
+    display: flex;
+    flex-direction: column;
+  }
+  .ticket-checkout .checkout-summary {
+    order: -1;
+    border-left: 0;
+    border-bottom: 1px solid var(--border);
+    padding: 24px 20px;
+  }
+  .ticket-checkout .checkout-summary-inner {
+    position: static;
+  }
+  .ticket-checkout .checkout-main {
+    padding: 28px 20px 40px;
+  }
+  .ticket-checkout .checkout-summary h2 {
+    margin-bottom: 16px;
+  }
+  .ticket-checkout .checkout-summary dl {
+    margin-top: 16px;
+  }
+}

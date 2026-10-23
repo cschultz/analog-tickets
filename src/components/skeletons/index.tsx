@@ -1,1 +1,0 @@
-Lovable API error: 499 request_cancelled: Request was cancelled
