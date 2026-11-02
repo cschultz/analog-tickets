@@ -160,7 +160,19 @@ host settings for real values; never commit a populated template. If creating a
 local config file, do it after the clean source audit and do not include it in
 a shared source archive or its checksum manifest.
 
-## 5. Enable only the intended TEST workflows
+## 5. Organizer workspace setup
+
+Open `/admin` for Dashboard or `/organizer` for Orders, using the existing
+synthetic organizer account and event membership from step 3. No screen grants
+roles or creates an organizer account. Follow [organizer setup](ORGANIZER_WORKSPACE.md)
+to install the reviewed optional catalog extension after the 51-step baseline;
+it enables dashboard/reports and event/tier/inventory management. Updating app
+source alone does not apply SQL. Without it, existing Orders/Attendees/Promotions
+remain available and missing setup is explicit. Read-only organizer services
+require the exact TEST flags and server backend configuration described there;
+provider keys are not needed just to browse application records.
+
+## 6. Enable only the intended TEST workflows
 
 Configure server-only values in a secure process or the host's secure settings;
 do not commit populated files, print configuration, or paste secrets into chat.
@@ -175,6 +187,7 @@ copy is not a reason to rotate keys or create another provider account.
 | Receipt and recovery     | `GUEST_RECOVERY_SANDBOX_MODE=true` and the Mailtrap settings below                                                                                                          |
 | Optional account library | `GUEST_ACCOUNT_SANDBOX_MODE=true` plus guest recovery                                                                                                                       |
 | Ticket passes and door   | `ATTENDEE_PASS_SANDBOX_MODE=true`, `CHECKIN_SANDBOX_MODE=true`, `BOX_OFFICE_MODULE=true`                                                                                    |
+| Optional catalog editing | `ADMIN_CATALOG_TEST_MODE=true`, only after the reviewed organizer extension is installed; server-only, blank disables edits                                                 |
 | Mailtrap Email Testing   | `MAILTRAP_TESTING_MODE=true`, `MAILTRAP_API_TOKEN`, `MAILTRAP_ACCOUNT_ID`, `MAILTRAP_INBOX_ID`, synthetic `MAILTRAP_FROM_ADDRESS`, `MAILTRAP_RECIPIENT_DOMAIN=example.test` |
 
 `STAGING_ALLOWED_ORIGIN` is the app's exact bare HTTPS origin, with no path or
@@ -197,7 +210,7 @@ do not rename the variables when adapting the site's presentation. See the
 [release installation reference](PROMOTION_RELEASE_INSTALL.md) for pricing
 limits and source/database activation ordering.
 
-## 6. Record acceptance honestly
+## 7. Record acceptance honestly
 
 The existing published TEST demonstration has observed purchase, provider
 completion, receipt/recovery, optional account link, promo/search/export, door
