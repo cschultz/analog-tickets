@@ -7,10 +7,12 @@ export function OrganizerPromotions({
   eventId,
   eventName,
   userId,
+  timeZone,
 }: {
   eventId: string;
   eventName: string;
   userId: string;
+  timeZone?: string | undefined;
 }) {
   const request = useCallback(
     async (input: PromotionInput): Promise<PromotionResult> => {
@@ -30,6 +32,7 @@ export function OrganizerPromotions({
       eventId={eventId}
       eventName={eventName}
       request={request}
+      timeZone={timeZone}
     />
   );
 }

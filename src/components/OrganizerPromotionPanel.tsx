@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
+import { organizerDate } from "@/lib/organizer-order-detail-core";
+import { organizerUtcInput, organizerUtcValue } from "@/lib/organizer-schedule-time";
 import {
   parsePromotionInput,
   decimalMinorUnits,
@@ -9,22 +11,6 @@ import {
   type PromotionResult,
 } from "@/lib/organizer-promotions-core";
 
-function localDate(iso: string) {
-  const d = new Date(iso),
-    pad = (n: number) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-}
-function localIso(value: string) {
-  const iso = new Date(value).toISOString();
-  // Native local-date inputs do not identify nonexistent daylight-saving
-  // times. Reject normalization rather than silently move an offer by an hour.
-  if (
-    !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?$/.test(value) ||
-    localDate(iso).slice(0, value.length) !== value
-  )
-    throw Error("invalid_local_date");
-  return iso;
-}
 const fresh = () => ({
   code: "",
   ticketTypeId: "",
@@ -52,10 +38,12 @@ export function OrganizerPromotionPanel({
   eventId,
   eventName,
   request,
+  timeZone,
 }: {
   eventId: string;
   eventName?: string;
   request: (input: PromotionInput) => Promise<PromotionResult>;
+  timeZone?: string | undefined;
 }) {
   const [page, setPage] = useState<PromotionPage | null>(null),
     [draft, setDraft] = useState(fresh),
@@ -114,8 +102,8 @@ export function OrganizerPromotionPanel({
       code: p.code,
       ticketTypeId: p.ticketTypeId ?? "",
       enabled: p.enabled,
-      startsAt: localDate(p.startsAt),
-      expiresAt: localDate(p.expiresAt),
+      startsAt: organizerUtcInput(p.startsAt),
+      expiresAt: organizerUtcInput(p.expiresAt),
       kind: p.kind,
       discount: (p.value / 100).toFixed(2),
       limit: p.maxRedemptions === null ? "" : String(p.maxRedemptions),
@@ -130,14 +118,8 @@ export function OrganizerPromotionPanel({
     let startsAt = "",
       expiresAt = "";
     try {
-      startsAt =
-        editing && draft.startsAt === localDate(editing.startsAt)
-          ? editing.startsAt
-          : localIso(draft.startsAt);
-      expiresAt =
-        editing && draft.expiresAt === localDate(editing.expiresAt)
-          ? editing.expiresAt
-          : localIso(draft.expiresAt);
+      startsAt = organizerUtcValue(draft.startsAt, editing?.startsAt);
+      expiresAt = organizerUtcValue(draft.expiresAt, editing?.expiresAt);
     } catch {
       /* Parser supplies a single form error. */
     }
@@ -216,6 +198,10 @@ export function OrganizerPromotionPanel({
       <h2 id="promotion-heading">Promo codes</h2>
       {eventName ? <p className="checkout-note">Managing codes for {eventName}.</p> : null}
       <p className="checkout-note">
+        Schedules display in {timeZone ?? "UTC (event timezone unavailable)"}. Edit dates explicitly
+        in UTC below. A display timezone does not move stored instants or change saved quotes.
+      </p>
+      <p className="checkout-note">
         TEST only. One code per purchase, fixed USD off the whole order or a percentage. No added
         fees; tax is not calculated.
       </p>
@@ -258,9 +244,15 @@ export function OrganizerPromotionPanel({
               {p.maxRedemptions ?? "unlimited"}
             </p>
             <p className="checkout-note">
-              {new Date(p.startsAt).toLocaleString()} – {new Date(p.expiresAt).toLocaleString()} (
-              {Intl.DateTimeFormat().resolvedOptions().timeZone})
+              <time dateTime={p.startsAt}>{organizerDate(p.startsAt, timeZone ?? "UTC")}</time> –{" "}
+              <time dateTime={p.expiresAt}>{organizerDate(p.expiresAt, timeZone ?? "UTC")}</time>
             </p>
+            <details className="checkout-note">
+              <summary>Exact stored timestamps</summary>
+              <p className="break-all">
+                {p.startsAt} → {p.expiresAt}
+              </p>
+            </details>
             <Button
               type="button"
               variant="outline"
@@ -338,9 +330,7 @@ export function OrganizerPromotionPanel({
               Up to two decimal places. Purchases must still total at least $0.50 USD; free and
               100%-off purchases are not supported.
             </p>
-            <label htmlFor="promo-admin-start">
-              Starts ({Intl.DateTimeFormat().resolvedOptions().timeZone})
-            </label>
+            <label htmlFor="promo-admin-start">Starts (UTC)</label>
             <input
               id="promo-admin-start"
               required
@@ -349,9 +339,7 @@ export function OrganizerPromotionPanel({
               value={draft.startsAt}
               onChange={(e) => change("startsAt", e.target.value)}
             />
-            <label htmlFor="promo-admin-end">
-              Expires ({Intl.DateTimeFormat().resolvedOptions().timeZone})
-            </label>
+            <label htmlFor="promo-admin-end">Expires (UTC)</label>
             <input
               id="promo-admin-end"
               required

@@ -4,7 +4,13 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 
-const ROOT_FILES = new Set(["package.json", "bun.lock", "tsconfig.json", "vite.config.ts"]);
+const ROOT_FILES = new Set([
+  "package.json",
+  "bun.lock",
+  "tsconfig.json",
+  "tsconfig.runtime.json",
+  "vite.config.ts",
+]);
 const EXTENSIONS = ["", ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs", ".json", ".css"];
 
 export function selectRuntimePaths(trackedPaths) {

@@ -1,9 +1,14 @@
 import { isUuid } from "./checkout-core";
+import {
+  parseOrganizerFilters,
+  readOrganizerCursor,
+  type OrganizerFilters,
+} from "./organizer-browse-core";
 
 export const ORGANIZER_PAGE_SIZE = 50;
 export const ORGANIZER_EXPORT_LIMIT = 500;
 export type OrganizerResource = "orders" | "attendees";
-export type OrganizerSearchField = "name" | "email" | "id" | "orderId";
+export type OrganizerSearchField = "auto" | "name" | "email" | "id" | "orderId";
 export interface OrganizerRecordsInput {
   eventId: string;
   resource: OrganizerResource;
@@ -11,6 +16,8 @@ export interface OrganizerRecordsInput {
   query: string;
   after: string | null;
   operation: "search" | "export";
+  sort?: "recent";
+  filters?: OrganizerFilters;
 }
 export interface OrganizerRecord {
   id: string;
@@ -33,34 +40,49 @@ export function parseOrganizerRecordsInput(value: unknown): OrganizerRecordsInpu
   const raw = value as Record<string, unknown>;
   if (
     Object.keys(raw).some(
-      (key) => !["eventId", "resource", "field", "query", "after", "operation"].includes(key),
+      (key) =>
+        ![
+          "eventId",
+          "resource",
+          "field",
+          "query",
+          "after",
+          "operation",
+          "sort",
+          "filters",
+        ].includes(key),
     )
   )
     return null;
-  const { eventId, resource, field, query, operation } = raw;
+  const { eventId, resource, field, query, operation, sort, filters: rawFilters } = raw;
   const after = raw["after"] ?? null;
   if (
     !isUuid(eventId) ||
     (resource !== "orders" && resource !== "attendees") ||
-    !["name", "email", "id", "orderId"].includes(field as string) ||
+    !["auto", "name", "email", "id", "orderId"].includes(field as string) ||
     typeof query !== "string" ||
     query.length > 120 ||
     /[\p{Cc}*]/u.test(query) ||
-    (after !== null && !isUuid(after)) ||
+    (after !== null && !(sort === "recent" ? readOrganizerCursor(after) : isUuid(after))) ||
+    (sort !== undefined && sort !== "recent") ||
+    (sort !== "recent" && (rawFilters !== undefined || field === "auto")) ||
     (operation !== "search" && operation !== "export") ||
     (operation === "export" && after !== null) ||
     (resource === "orders" && field === "orderId")
   )
     return null;
   const term = query.trim();
+  const filters = sort === "recent" ? parseOrganizerFilters(rawFilters, resource) : null;
+  if (sort === "recent" && !filters) return null;
   if ((field === "id" || field === "orderId") && term !== "" && !isUuid(term)) return null;
   return {
     eventId: eventId.toLowerCase(),
     resource,
     field: field as OrganizerSearchField,
     query: term,
-    after: after?.toLowerCase() ?? null,
+    after: typeof after === "string" ? (sort === "recent" ? after : after.toLowerCase()) : null,
     operation,
+    ...(sort === "recent" ? { sort: "recent" as const, filters: filters! } : {}),
   };
 }
 

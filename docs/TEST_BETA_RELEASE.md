@@ -1,4 +1,4 @@
-# Analog Tickets v0.1.0-test.1
+# Analog Tickets v0.1.0-test.2 — Organizer Experience
 
 Source-available **TEST beta**. This is a developer-operated evaluation release,
 not a hosted ticket seller or a real-admission launch. No live payment or
@@ -10,8 +10,15 @@ Neutral event catalog and restrained checkout branding; account-optional guest
 purchase; quantities/promotion codes/saved pricing; signature-verified Stripe
 TEST fulfillment; Mailtrap TEST receipt/recovery; optional account library;
 online door/duplicate checks; organizer search, bounded CSV and eligible-ticket
-partial TEST refunds. Setup uses one reviewed 51-step installer, an opt-in
-synthetic event/tier, and explicit Auth/staff mapping.
+partial TEST refunds. Adds the compact organizer workspace, recent-order
+discovery/filtering, connected order pricing/support, attendee/check-in entry,
+event/tier/inventory management, bounded date reporting and read-only setup
+diagnostics. Setup uses the unchanged reviewed 51-step installer, opt-in
+synthetic event/tier and explicit Auth/staff mapping. Dashboard/catalog/report
+features additionally need the separate reviewed three-function extension;
+see [organizer setup and existing-install upgrade](ORGANIZER_WORKSPACE.md).
+No SQL is applied by source updates. An existing test.1 backend must not rerun
+the fresh-only installer or reset its records to upgrade.
 
 Read [installation](RELEASE_FIRST_RUN.md), [remixing](REMIXING.md),
 [licensing](../LICENSE.md) and [security reporting](../SECURITY.md).
@@ -28,8 +35,11 @@ each new remix has already passed provider acceptance.
 
 Physical-phone camera scanning and unaided independent human installation are
 **unverified accepted TEST-beta limitations**. USD only; zero added fees; no tax
-calculation, offline scanning, seating/waitlist/resale features or complete event
-administration UI. CSV is capped at 500 matching rows. Operator URLs retain six
+calculation, offline scanning, seating/waitlist/resale, lodging or full legacy
+administration parity. CSV is capped at 500 matching rows. Reports support at
+most 90 calendar days only with proven aggregate coverage; receipt diagnostics
+cap at 1,000 rows and are not provider/inbox verification. Scanning remains the
+single-event TEST pilot. Operator URLs retain six
 gated `/staging/` paths for compatibility; signing in does not grant staff access.
 
 The exact source manifest and archive checksum identify the release bytes, not

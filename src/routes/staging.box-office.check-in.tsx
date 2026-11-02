@@ -1,5 +1,5 @@
 /**
- * Private, unlinked, noindex staging Box Office check-in surface.
+ * Noindex TEST Box Office check-in surface, linked from the organizer workspace.
  *
  * Optional module: it renders nothing useful unless the server-side Box Office
  * flag is on AND the signed-in caller already holds a box_office / organizer /

@@ -23,6 +23,11 @@ your isolated backend. Keep workflow flags disabled until the relevant setup
 is complete. Use only TEST funds and synthetic `@example.test` recipients.
 Do not copy settings from the Cosmico demo or another organizer.
 
+This template includes the v0.1.0-test.2 organizer workspace. After installing
+your own TEST backend, follow [organizer setup](ORGANIZER_WORKSPACE.md) for its
+separate reviewed catalog extension and existing account/event membership.
+Neither remixing nor updating source installs SQL or grants staff access.
+
 Lovable's [remix documentation](https://docs.lovable.dev/features/projects/remix)
 describes the current copy behavior: code and database structure carry over,
 while records, secrets, custom domains, publish state, collaborators and service

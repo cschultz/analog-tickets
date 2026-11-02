@@ -3,6 +3,14 @@ import { isUuid } from "./checkout-core";
 import { evaluateRefundPolicyAuthorization } from "./refund-policy-core";
 import { loadCallerMemberships } from "./refund-policy.server";
 import {
+  afterOrganizerDay,
+  organizerBrowseLogic,
+  organizerTimestamp,
+  readOrganizerCursor,
+  organizerCursor,
+  isBeforeOrganizerCursor,
+} from "./organizer-browse-core";
+import {
   ORGANIZER_EXPORT_LIMIT,
   ORGANIZER_PAGE_SIZE,
   organizerRecordsCsv,
@@ -26,6 +34,9 @@ interface ReadQuery extends PromiseLike<{
   in: (field: string, values: string[]) => ReadQuery;
   ilike: (field: string, value: string) => ReadQuery;
   gt: (field: string, value: string) => ReadQuery;
+  gte: (field: string, value: string) => ReadQuery;
+  lt: (field: string, value: string) => ReadQuery;
+  or: (filter: string) => ReadQuery;
   order: (field: string, options: { ascending: boolean }) => ReadQuery;
   limit: (limit: number) => ReadQuery;
 }
@@ -125,14 +136,18 @@ export async function readOrganizerRecords(args: {
       return unavailable();
     // Deliberately NO service-role client. Existing RLS remains a second boundary.
     const orders = input.resource === "orders";
-    const projection = orders
+    let projection = orders
       ? "id,event_id,buyer_name,buyer_email,status,created_at,currency,total_cents"
       : "id,event_id,order_id,holder_name,holder_email,status,created_at,checked_in_at";
+    const recent = input.sort === "recent";
+    const filters = input.filters;
+    if (filters?.ticketTypeId)
+      projection += orders ? ",order_items!inner(ticket_type_id)" : ",ticket_type_id";
     let query = (args.userClient as ReadClient)
       .from(orders ? "orders" : "tickets")
       .select(projection, { count: "exact" })
       .eq("event_id", input.eventId);
-    if (input.query) {
+    if (input.query && input.field !== "auto") {
       const field =
         input.field === "name"
           ? orders
@@ -150,9 +165,31 @@ export async function readOrganizerRecords(args: {
           ? query.ilike(field, organizerSearchPattern(input.query))
           : query.eq(field, input.query.toLowerCase());
     }
-    if (input.after) query = query.gt("id", input.after);
+    if (filters) {
+      if (filters.status !== "all") query = query.eq("status", filters.status);
+      if (filters.from) query = query.gte("created_at", filters.from + "T00:00:00Z");
+      if (filters.through) query = query.lt("created_at", afterOrganizerDay(filters.through));
+      if (filters.ticketTypeId)
+        query = query.eq(
+          orders ? "order_items.ticket_type_id" : "ticket_type_id",
+          filters.ticketTypeId,
+        );
+    }
+    if (recent) {
+      const logic = organizerBrowseLogic(
+        input.resource,
+        input.query,
+        input.field === "auto",
+        input.after,
+      );
+      if (logic) query = query.or(logic);
+      query = query.order("created_at", { ascending: false }).order("id", { ascending: false });
+    } else {
+      if (input.after) query = query.gt("id", input.after);
+      query = query.order("id", { ascending: true });
+    }
     const limit = input.operation === "export" ? ORGANIZER_EXPORT_LIMIT : ORGANIZER_PAGE_SIZE;
-    const { data, error, count } = await query.order("id", { ascending: true }).limit(limit + 1);
+    const { data, error, count } = await query.limit(limit + 1);
     if (error || !Array.isArray(data) || !Number.isSafeInteger(count) || count! < 0)
       return unavailable();
     if (input.operation === "export" && count! > limit)
@@ -161,15 +198,42 @@ export async function readOrganizerRecords(args: {
     if (data.length !== Math.min(count!, limit + 1)) return unavailable();
     const rows: OrganizerRecord[] = [];
     let previousId = input.after ?? "";
-    for (const raw of data.slice(0, limit)) {
+    let previousCursor = input.after && recent ? readOrganizerCursor(input.after) : null;
+    for (const raw of recent ? data : data.slice(0, limit)) {
       if (raw["event_id"] !== input.eventId || !isUuid(raw["id"])) return unavailable();
       const id = raw["id"].toLowerCase();
-      if (id <= previousId) return unavailable();
+      if (!recent && id <= previousId) return unavailable();
       previousId = id;
       const orderId = orders ? id : raw["order_id"];
       const name = text(raw[orders ? "buyer_name" : "holder_name"], 500);
       const email = text(raw[orders ? "buyer_email" : "holder_email"], 320);
-      const createdAt = date(raw["created_at"]);
+      const createdAt = recent ? organizerTimestamp(raw["created_at"]) : date(raw["created_at"]);
+      if (recent) {
+        if (!createdAt) return unavailable();
+        const currentCursor = { createdAt, id };
+        if (previousCursor && !isBeforeOrganizerCursor(currentCursor, previousCursor))
+          return unavailable();
+        previousCursor = currentCursor;
+        if (filters?.status !== "all" && raw["status"] !== filters?.status) return unavailable();
+        if (filters?.from && createdAt < filters.from + "T00:00:00.000000Z") return unavailable();
+        if (filters?.through && createdAt.slice(0, 10) > filters.through) return unavailable();
+        if (filters?.ticketTypeId) {
+          const items = raw["order_items"];
+          if (
+            orders
+              ? !Array.isArray(items) ||
+                !items.length ||
+                items.some(
+                  (item) =>
+                    !item ||
+                    typeof item !== "object" ||
+                    item.ticket_type_id !== filters.ticketTypeId,
+                )
+              : raw["ticket_type_id"] !== filters.ticketTypeId
+          )
+            return unavailable();
+        }
+      }
       const checkedInAt =
         orders || raw["checked_in_at"] === null ? null : date(raw["checked_in_at"]);
       const currency = orders ? raw["currency"] : null;
@@ -204,11 +268,13 @@ export async function readOrganizerRecords(args: {
         orderTotalCents: total as number | null,
       });
     }
+    const pageRows = rows.slice(0, limit);
     return {
       ok: true,
-      rows,
-      nextAfter: count! > limit ? rows.at(-1)!.id : null,
-      csv: input.operation === "export" ? organizerRecordsCsv(input, rows) : null,
+      rows: pageRows,
+      nextAfter:
+        count! > limit ? (recent ? organizerCursor(pageRows.at(-1)!) : pageRows.at(-1)!.id) : null,
+      csv: input.operation === "export" ? organizerRecordsCsv(input, pageRows) : null,
     };
   } catch {
     return unavailable();

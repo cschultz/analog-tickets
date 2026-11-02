@@ -19,8 +19,10 @@ the earlier public source and applicable retained portions; see
 - Stripe TEST checkout and signature-verified webhook fulfillment.
 - Receipt/recovery links captured in Mailtrap Email Testing, ticket passes,
   online door scanning, and duplicate-scan denial.
-- Event-scoped organizer search, bounded CSV export, promotion editing, and
-  eligible-ticket TEST refunds.
+- An event-scoped organizer workspace: recent orders, search/filters and CSV,
+  connected order detail/buyer support, attendee lookup and check-in entry,
+  promotions, dashboard, bounded date reports, event/tier/inventory management,
+  and read-only setup/delivery diagnostics. See [organizer setup](docs/ORGANIZER_WORKSPACE.md).
 
 ## Start here
 
@@ -37,7 +39,9 @@ you still need your own isolated TEST backend and configuration.
 Follow [the first-run guide](docs/RELEASE_FIRST_RUN.md). It separates a
 credential-free source build, installation on an empty TEST backend, and optional
 provider acceptance. The current schema is the generated **51-step** installer;
-do not replay individual historical migration files.
+do not replay individual historical migration files. The organizer catalog
+extension is a separate, explicit installation step described in that guide;
+updating source alone does not install it.
 
 The package includes a locked Bun dependency graph, a source checksum manifest,
 SQL artifact verification, and a documented synthetic acceptance checklist. It does
@@ -64,9 +68,15 @@ final source/binary distribution; these files do not license the app itself.
 - Added fees are zero. Tax is not calculated; this is not a tax-exemption claim.
 - Email goes only to synthetic recipients in Mailtrap Email Testing. No live
   payment or real-recipient email setup is supplied.
-- No offline scanning, reserved seating, waitlists, resale, or complete event
-  administration UI. Event/ticket setup currently uses reviewed database setup.
+- No offline scanning, reserved seating, waitlists, resale, lodging, global
+  staff provisioning or full legacy-festival administration parity. Initial
+  event/organizer provisioning remains installation-owner setup; the reviewed
+  catalog extension then supports selected-event and ticket-tier edits.
 - Organizer CSV is capped at 500 matching rows; narrow an oversized export.
+- Date reports cover up to 90 calendar days only where loaded aggregates prove
+  complete coverage. Receipt diagnostics cap at 1,000 rows; unknown/capped reads
+  are not a healthy empty queue. Setup checks do not contact payment/mail providers.
+- Door scanning remains the existing single-event online TEST pilot.
 - Six gated operator routes still use `/staging/` names. They are not public
   administration access and do not grant a signed-in user staff permissions.
 - Physical-phone camera scanning and unaided independent human installation
